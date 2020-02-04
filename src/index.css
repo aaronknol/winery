@@ -11,3 +11,19 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.input-wrapper {
+  position: relative;
+  display: inline;
+}
+
+.currency {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
+}
+
+.input-wrapper input {
+  padding-left: 10px;
+}

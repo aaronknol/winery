@@ -11,6 +11,9 @@ class Wine extends React.Component {
                     { this.props.wine.type }
                 </td>
                 <td>
+                    { this.props.wine.price }
+                </td>
+                <td>
                     { this.props.wine.rating }
                 </td>
             </Fragment>

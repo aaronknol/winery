@@ -4,27 +4,42 @@ import StarRating from './StarRating';
 class AddWine extends React.Component {
     nameInput = React.createRef();
     typeInput = React.createRef();
-    wineForm = React.createRef();
+    priceInput = React.createRef();
 
+    constructor() {
+        super();
+        
+        this.state = {
+            selectedRating: null
+        }
+    }
+    
     submitHandler = (e) => {
         e.preventDefault();
         
         const nameValue = this.nameInput.current.value;
         const typeValue = this.typeInput.current.value;
-        const ratingValue = e.target.elements.rating.value;
+        const priceValue = this.priceInput.current.value;
         
         const newWine = {
             name: nameValue,
             type: typeValue,
-            rating: ratingValue
+            price: priceValue,
+            rating: this.state.selectedRating
         };
 
         this.props.addWine(newWine);
     }
 
+    ratingSelected = (selected) => {
+        this.setState({
+            selectedRating: selected
+        });
+    }
+
     render() {
         return (
-            <form onSubmit={this.submitHandler} ref={this.wineForm}>
+            <form onSubmit={this.submitHandler}>
                 <fieldset>
                     <h1>Add a new wine</h1>
 
@@ -48,10 +63,22 @@ class AddWine extends React.Component {
                     </div>
 
                     <div className="form-group">
+                        <label htmlFor="price">Price</label>
+                        <div class="input-wrapper">
+                            <span class="currency">$</span>
+                            <input 
+                                ref={this.priceInput}
+                                type="text" 
+                                id="price" />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
                         <h2>Rating</h2>
                         
                         <StarRating
-                            numberOfStars="12">
+                            numberOfStars="5"
+                            onClick={this.ratingSelected}>
                         </StarRating>
                     </div>
 

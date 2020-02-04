@@ -5,20 +5,23 @@ class WineList extends React.Component {
     render() {
         return (
             <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Rating</th>
-                </tr>
-                
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {
                         Object.keys(this.props.wines).map(key => (
-                            <tr>
+                            <tr key={key}>
                                 <Wine key={key} index={key} wine={this.props.wines[key]}></Wine>
                             </tr>
                         ))
                     }
-                
+                </tbody>
             </table>
         );
     };
