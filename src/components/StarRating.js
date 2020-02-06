@@ -13,11 +13,13 @@ class StarRating extends React.Component {
     clickHandler = (e) => {
         const selectedValue = e.target.value;
         
-        this.setState({
-            selected: selectedValue
-        }, () => {
-            this.props.onClick(this.state.selected);
-        });
+        // this.setState({
+        //     selected: selectedValue
+        // }, () => {
+        //     this.props.onClick(this.state.selected);
+        // });
+
+        this.props.onClick(selectedValue);
     }
 
     render() {
