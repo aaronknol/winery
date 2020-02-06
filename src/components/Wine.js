@@ -1,22 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 class Wine extends React.Component {
     render() {
         return (
-            <Fragment>
-                <td>
-                    { this.props.wine.name }
-                </td>
-                <td>
-                    { this.props.wine.type }
-                </td>
-                <td>
-                    { this.props.wine.price }
-                </td>
-                <td>
-                    { this.props.wine.rating }
-                </td>
-            </Fragment>
+            this.props.render()
         );
     };
 };

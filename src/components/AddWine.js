@@ -1,5 +1,6 @@
 import React from 'react';
 import StarRating from './StarRating';
+import formatToCents from '../utilities';
 
 class AddWine extends React.Component {
     nameInput = React.createRef();
@@ -24,7 +25,7 @@ class AddWine extends React.Component {
         const newWine = {
             name: nameValue,
             type: typeValue,
-            price: priceValue,
+            price: formatToCents(parseFloat(priceValue)),
             rating: this.state.selectedRating
         };
 
@@ -64,8 +65,8 @@ class AddWine extends React.Component {
 
                     <div className="form-group">
                         <label htmlFor="price">Price</label>
-                        <div class="input-wrapper">
-                            <span class="currency">$</span>
+                        <div className="input-wrapper">
+                            <span className="currency">$</span>
                             <input 
                                 ref={this.priceInput}
                                 type="text" 
@@ -78,7 +79,8 @@ class AddWine extends React.Component {
                         
                         <StarRating
                             numberOfStars="5"
-                            onClick={this.ratingSelected}>
+                            onClick={this.ratingSelected}
+                            value={this.state.selectedRating}>
                         </StarRating>
                     </div>
 
