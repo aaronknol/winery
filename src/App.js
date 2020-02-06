@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import database from './database';
 import AddWine from './components/AddWine';
 import WineList from './components/WineList';
 import './App.css';
@@ -9,6 +10,15 @@ class App extends React.Component {
   state = {
     wines: {}
   };
+ 
+  componentDidMount() {
+    
+    this.ref = database.syncState('/wines', {
+      context: this,
+      state: 'wines'
+    });
+    
+  }
 
   addWine = (wine) => {
     // Take a copy of state
