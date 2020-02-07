@@ -4,20 +4,10 @@ class StarRating extends React.Component {
 
     constructor() {
         super();
-        
-        this.state = {
-            selected: null
-        }
     }
 
     clickHandler = (e) => {
         const selectedValue = e.target.value;
-        
-        // this.setState({
-        //     selected: selectedValue
-        // }, () => {
-        //     this.props.onClick(this.state.selected);
-        // });
 
         this.props.onClick(selectedValue);
     }
@@ -35,7 +25,8 @@ class StarRating extends React.Component {
                             name="rating" 
                             id={`rating-${parseInt(key, 10) + 1}`} 
                             value={parseInt(key, 10) + 1} 
-                            onClick={this.clickHandler}
+                            onChange={this.clickHandler}
+                            checked={parseInt(this.props.value, 10) === parseInt(key, 10) + 1}
                         />
                     </Fragment>
                 ))

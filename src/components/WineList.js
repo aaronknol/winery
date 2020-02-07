@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import Wine from './Wine';
 import { formatPrice } from '../utilities';
+import AddWine from './AddWine';
 
 class WineList extends React.Component {
     render() {
         return (
+            <Fragment>
+            <Link to='/add'>Add</Link>
+
             <table>
                 <thead>
                     <tr>
@@ -27,6 +32,9 @@ class WineList extends React.Component {
                                         <td>{this.props.wines[key].type}</td>
                                         <td>{formatPrice(this.props.wines[key].price)}</td>
                                         <td>{this.props.wines[key].rating}</td>
+                                        <td>
+                                            <Link to={`/edit/${key}`}>Edit</Link>
+                                        </td>
                                     </tr>
                             )}>
                             </Wine>
@@ -34,6 +42,7 @@ class WineList extends React.Component {
                     }
                 </tbody>
             </table>
+            </Fragment>
         );
     };
 };

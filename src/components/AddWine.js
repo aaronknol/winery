@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
 import StarRating from './StarRating';
 import formatToCents from '../utilities';
 
@@ -7,29 +8,35 @@ class AddWine extends React.Component {
     typeInput = React.createRef();
     priceInput = React.createRef();
 
+    state = {
+        submitted: false
+    };
+
     constructor() {
-        super();
-        
-        this.state = {
-            selectedRating: null
-        }
+        super();  
     }
     
     submitHandler = (e) => {
         e.preventDefault();
         
-        const nameValue = this.nameInput.current.value;
-        const typeValue = this.typeInput.current.value;
-        const priceValue = this.priceInput.current.value;
+        // const nameValue = this.nameInput.current.value;
+        // const typeValue = this.typeInput.current.value;
+        // const priceValue = this.priceInput.current.value;
         
-        const newWine = {
-            name: nameValue,
-            type: typeValue,
-            price: formatToCents(parseFloat(priceValue)),
-            rating: this.state.selectedRating
-        };
+        // const newWine = {
+        //     name: nameValue,
+        //     type: typeValue,
+        //     price: formatToCents(parseFloat(priceValue)),
+        //     rating: this.state.selectedRating
+        // };
 
-        this.props.addWine(newWine);
+        // this.props.addWine(newWine);
+
+        this.setState({
+            submitted: true
+        });
+
+        this.props.history.push('/');
     }
 
     ratingSelected = (selected) => {
@@ -39,6 +46,10 @@ class AddWine extends React.Component {
     }
 
     render() {
+        // if (this.state.submitted === true) {
+        //     return <Redirect to='/' />
+        // }
+
         return (
             <form onSubmit={this.submitHandler}>
                 <fieldset>
@@ -91,4 +102,4 @@ class AddWine extends React.Component {
     }
 }
 
-export default AddWine;
+export default withRouter(AddWine);
