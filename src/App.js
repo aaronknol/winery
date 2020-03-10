@@ -53,10 +53,14 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" render={ (props) => <WineList wines={this.state.wines}></WineList> } ></Route>
+          <Route exact path="/">
+            <WineList wines={this.state.wines}></WineList>
+          </Route>
           {/* <Route path="/edit/:wineId" component={EditWine}></Route> */}
-          <Route path="/edit/:wineId" render={ (props) => <EditWine {...props} wines={this.state.wines} updateWine={this.updateWine}></EditWine>}></Route>
-          <Route path="/add" render={ (props) => <AddWine addWine={this.addWine}></AddWine> }></Route> 
+          <Route path="/edit/:wineId">
+            <EditWine wines={this.state.wines} updateWine={this.updateWine}></EditWine>
+          </Route>
+          <Route path="/add" ><AddWine addWine={this.addWine}></AddWine></Route> 
         </Switch>
       </BrowserRouter>
 

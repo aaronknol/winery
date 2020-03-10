@@ -12,25 +12,25 @@ class AddWine extends React.Component {
         submitted: false
     };
 
-    constructor() {
+    constructor(props) {
         super();  
     }
     
     submitHandler = (e) => {
         e.preventDefault();
         
-        // const nameValue = this.nameInput.current.value;
-        // const typeValue = this.typeInput.current.value;
-        // const priceValue = this.priceInput.current.value;
+        const nameValue = this.nameInput.current.value;
+        const typeValue = this.typeInput.current.value;
+        const priceValue = this.priceInput.current.value;
         
-        // const newWine = {
-        //     name: nameValue,
-        //     type: typeValue,
-        //     price: formatToCents(parseFloat(priceValue)),
-        //     rating: this.state.selectedRating
-        // };
+        const newWine = {
+            name: nameValue,
+            type: typeValue,
+            price: formatToCents(parseFloat(priceValue)),
+            rating: this.state.selectedRating
+        };
 
-        // this.props.addWine(newWine);
+        this.props.addWine(newWine);
 
         this.setState({
             submitted: true
