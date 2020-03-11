@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Wine from './Wine';
 import { formatPrice } from '../utilities';
-import AddWine from './AddWine';
 
 function WineList (props) {
     return (

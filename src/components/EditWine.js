@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router-dom';
 import StarRating from './StarRating';
 import formatToCents from '../utilities';
@@ -13,11 +13,6 @@ function EditWine (props) {
         rating: ''
     });
     const [currentRating, setCurrentRating] = useState('');
-    const [nameValue, setNameValue] = useState('Pepp');
-
-    // const nameInput = React.createRef();
-    // const typeInput = React.createRef();
-    // const priceInput = React.createRef();
 
     useEffect(() => {
         Object.keys(props.wines).map( key => {
@@ -25,24 +20,21 @@ function EditWine (props) {
                 setSelectedWine(props.wines[key]);
                 setCurrentRating(props.wines[key].rating);
             }
+            return null;
         });
-    }, []);
+    }, [props.wines, props.match.params.wineId]);
     
     const submitHandler = (e) => {
         e.preventDefault();
         
-        const nameValue = this.nameInput.current.value;
-        const typeValue = this.typeInput.current.value;
-        const priceValue = this.priceInput.current.value;
-        
         const newWine = {
-            name: nameValue,
-            type: typeValue,
-            price: formatToCents(parseFloat(priceValue)),
+            name: selectedWine.name,
+            type: selectedWine.type,
+            price: formatToCents(parseFloat(selectedWine.price)),
             rating: currentRating
         };
 
-        props.updateWine(this.props.match.params.wineId, newWine);
+        props.updateWine(props.match.params.wineId, newWine);
         props.history.push('/');
     }
 
@@ -53,7 +45,7 @@ function EditWine (props) {
     const onChangeHandler = (e) => {
         console.log('gotta change something! ', e.target.name, ' ', e.target.value);
         
-        if (e.target.name === 'name') {console.log('here')
+        if (e.target.name === 'name') {
             setSelectedWine(({
                 ...selectedWine,
                 name: e.target.value
