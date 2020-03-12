@@ -49,12 +49,29 @@ class App extends React.Component {
     });
   }
 
+  deleteWine = (key) => {
+    // Take a copy of state
+    console.log('delete: ', key);
+    const wines = { ...this.state.wines };
+
+    // Add new wine to wine variable
+    console.log('before: ', wines);
+    wines[key] = null;
+    console.log('after: ', wines);
+    
+
+    // Set new wine object to state
+    this.setState({
+      wines: wines
+    });
+  }
+
   render() {
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <WineList wines={this.state.wines}></WineList>
+            <WineList wines={this.state.wines} deleteWine={this.deleteWine}></WineList>
           </Route>
           {/* <Route path="/edit/:wineId" component={EditWine}></Route> */}
           <Route path="/edit/:wineId">

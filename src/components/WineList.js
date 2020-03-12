@@ -33,6 +33,11 @@ function WineList (props) {
                                     <td>
                                         <Link to={`/edit/${key}`}>Edit</Link>
                                     </td>
+                                    <td>
+                                        <button type="button" onClick={ () => props.deleteWine(key) }>
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                         )}>
                         </Wine>
