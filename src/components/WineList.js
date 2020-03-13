@@ -4,6 +4,7 @@ import Wine from './Wine';
 import { formatPrice } from '../utilities';
 
 function WineList (props) {
+
     return (
         <Fragment>
         <Link to='/add'>Add</Link>
@@ -11,7 +12,11 @@ function WineList (props) {
         <table>
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>
+                        <button type="button" onClick={props.sortWines}>
+                            Name
+                        </button>
+                    </th>
                     <th>Type</th>
                     <th>Price</th>
                     <th>Rating</th>

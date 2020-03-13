@@ -51,16 +51,46 @@ class App extends React.Component {
 
   deleteWine = (key) => {
     // Take a copy of state
-    console.log('delete: ', key);
     const wines = { ...this.state.wines };
 
-    // Add new wine to wine variable
-    console.log('before: ', wines);
     wines[key] = null;
-    console.log('after: ', wines);
-    
 
     // Set new wine object to state
+    this.setState({
+      wines: wines
+    });
+  }
+
+  sortWines = () => {
+    // Take a copy of state
+    const sorted = {};
+    const wines = { ...this.state.wines };
+
+    Object
+      .keys(this.state.wines).sort((a, b) => {
+        // return props.wines[b].name - props.wines[a].name;
+        if (this.state.wines[a].name < this.state.wines[b].name) {
+          return -1;
+        }
+                
+        if (this.state.wines[a].name > this.state.wines[b].name) {
+          return 1;
+        }
+            
+        // names must be equal
+        return 0;
+      }
+    )
+    .forEach((key) => {
+      sorted[key] = wines[key];   
+    });
+
+    var loopIndex = 0;
+    Object.keys(this.state.wines).forEach( () => {
+      wines[Object.keys(wines)[loopIndex]] = sorted[Object.keys(sorted)[loopIndex]];
+      loopIndex = loopIndex + 1;
+    });
+
     this.setState({
       wines: wines
     });
@@ -71,7 +101,7 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <WineList wines={this.state.wines} deleteWine={this.deleteWine}></WineList>
+            <WineList wines={this.state.wines} deleteWine={this.deleteWine} sortWines={this.sortWines}></WineList>
           </Route>
           {/* <Route path="/edit/:wineId" component={EditWine}></Route> */}
           <Route path="/edit/:wineId">
