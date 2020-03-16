@@ -46,10 +46,11 @@ function EditWine (props) {
         console.log('gotta change something! ', e.target.name, ' ', e.target.value);
         
         if (e.target.name === 'name') {
-            setSelectedWine(({
+            console.log('the selected wine: ', selectedWine);
+            setSelectedWine({
                 ...selectedWine,
                 name: e.target.value
-            }));
+            });
         } else if (e.target.name === 'type') {
             setSelectedWine({
                 ...selectedWine,
