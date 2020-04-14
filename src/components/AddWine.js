@@ -13,7 +13,6 @@ function AddWine (props) {
     
     const submitHandler = (e) => {
         e.preventDefault();
-        var price = wine.price;
         wine.price = formatToCents(wine.price);
         props.addWine(wine);
         props.history.push('/');

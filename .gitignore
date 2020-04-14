@@ -114,3 +114,6 @@ wp-content/mysql.sql
 *.asf
 *.wmv
 *.avi
+
+# Local Netlify folder
+.netlify

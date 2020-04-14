@@ -15,80 +15,114 @@ class App extends React.Component {
  
   componentDidMount() {
     
-    this.ref = database.syncState('/wines', {
-      context: this,
-      state: 'wines'
-    });
+    // this.ref = database.syncState('/wines', {
+    //   context: this,
+    //   state: 'wines',
+    //   asArray: true
+    // });
     
+    database.fetch('/wines', {
+      context: this,
+      asArray: true
+    }).then((data) => {
+      this.setState({
+        wines: data
+      });
+    });
+
   }
 
   addWine = (wine) => {
-    // Take a copy of state
-    const wines = { ...this.state.wines };
+    var immediatelyAvailableReference = database.push('wines', {
+      data: wine
+    }).then(newLocation => {
+      var generatedKey = newLocation.key;
+      // Take a copy of state
+      const wines = [ ...this.state.wines ];
+      wine.key = generatedKey;
+   
+      wines[ Object.keys(this.state.wines).length ] = wine
+    
+      // update state
+      this.setState({
+        wines: wines
+      });
+      console.log("WINES: ", wines);
 
-    // Add new wine to wine variable
-    wines[`wine${Date.now()}`] = wine;
+    }).catch(err => {
+      //handle error
+    });
+    //available immediately, you don't have to wait for the Promise to resolve
+    var generatedKey = immediatelyAvailableReference.key;
+  };
+
+  updateWine = (key, wine) => {
+    console.log('key: ', key)
+    // Take a copy of state
+    const wines = [ ...this.state.wines ];
+
+    const objIndex = wines.findIndex((element => element.key === key));
+    wines[objIndex] = wine;
 
     // Set new wine object to state
     this.setState({
       wines: wines
     });
-  };
 
-  updateWine = (key, wine) => {
-    // Take a copy of state
-    const wines = { ...this.state.wines };
-    console.log(wine);
-
-    // Add new wine to wine variable
-    wines[key] = wine;
-
-    // Set new wine object to state
-    this.setState({
-      wines: wines
+    database.update('/wines/' + key, {
+      data: { ...wine }
+    }).then( () => {
+      console.log('updated it!');
     });
   }
 
   deleteWine = (key) => {
     // Take a copy of state
-    const wines = { ...this.state.wines };
-
-    wines[key] = null;
+    let wines = [ ...this.state.wines ];
+    // remove the wine with key that's been passed in
+    wines = wines.filter(item => item.key !== key);
 
     // Set new wine object to state
     this.setState({
       wines: wines
     });
+
+    database.update('/wines/' + key, {
+      data: {name: null, price: null, rating: null, type: null, key: null}
+    }).then( () => {
+      console.log('deleted it!');
+    });
   }
 
-  sortWines = () => {
-    // Take a copy of state
-    const sorted = {};
-    const wines = { ...this.state.wines };
+  sortWines = (sortBy, method) => {
+    console.log('sortyBy: ', sortBy)
+    // // Take a copy of state
+    const wines = [ ...this.state.wines ];
 
-    Object
-      .keys(this.state.wines).sort((a, b) => {
-        // return props.wines[b].name - props.wines[a].name;
-        if (this.state.wines[a].name < this.state.wines[b].name) {
+    wines.sort((a, b) => {
+      if (method === 'highest') {
+        if (a[sortBy] > b[sortBy]) {
           return -1;
         }
                 
-        if (this.state.wines[a].name > this.state.wines[b].name) {
+        if (a[sortBy] < b[sortBy]) {
           return 1;
         }
-            
+        // names must be equal
+        return 0;
+
+      } else {
+        if (a[sortBy] < b[sortBy]) {
+          return -1;
+        }
+                
+        if (a[sortBy] > b[sortBy]) {
+          return 1;
+        }
+
         // names must be equal
         return 0;
       }
-    )
-    .forEach((key) => {
-      sorted[key] = wines[key];   
-    });
-
-    var loopIndex = 0;
-    Object.keys(this.state.wines).forEach( () => {
-      wines[Object.keys(wines)[loopIndex]] = sorted[Object.keys(sorted)[loopIndex]];
-      loopIndex = loopIndex + 1;
     });
 
     this.setState({
@@ -101,21 +135,21 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <WineList wines={this.state.wines} deleteWine={this.deleteWine} sortWines={this.sortWines}></WineList>
+            <WineList 
+              wines={this.state.wines} 
+              deleteWine={this.deleteWine} 
+              sortWines={this.sortWines}>
+            </WineList>
           </Route>
-          {/* <Route path="/edit/:wineId" component={EditWine}></Route> */}
           <Route path="/edit/:wineId">
-            <EditWine wines={this.state.wines} updateWine={this.updateWine}></EditWine>
+            <EditWine 
+              wines={this.state.wines} 
+              updateWine={this.updateWine}>
+            </EditWine>
           </Route>
           <Route path="/add" ><AddWine addWine={this.addWine}></AddWine></Route> 
         </Switch>
       </BrowserRouter>
-
-      // <Fragment>
-      //   <AddWine addWine={this.addWine}></AddWine>
-      //   <hr />
-      //   <WineList wines={this.state.wines}></WineList>
-      // </Fragment>
     );
   }
 }

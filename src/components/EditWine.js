@@ -10,7 +10,8 @@ function EditWine (props) {
         name: '',
         price: '',
         type: '',
-        rating: ''
+        rating: '',
+        key: ''
     });
     const [currentRating, setCurrentRating] = useState('');
 
@@ -28,13 +29,14 @@ function EditWine (props) {
         e.preventDefault();
         
         const newWine = {
+            key: selectedWine.key,
             name: selectedWine.name,
             type: selectedWine.type,
             price: formatToCents(parseFloat(selectedWine.price)),
             rating: currentRating
         };
 
-        props.updateWine(props.match.params.wineId, newWine);
+        props.updateWine(newWine.key, newWine);
         props.history.push('/');
     }
 
@@ -64,7 +66,6 @@ function EditWine (props) {
         }
     }
 
-
     return (
         <form onSubmit={submitHandler}>
             <fieldset>
@@ -72,8 +73,7 @@ function EditWine (props) {
 
                 <div className="form-group">
                     <label htmlFor="name">Name</label>
-                    <input 
-                        // ref={nameInput}
+                    <input
                         type="text" 
                         id="name"
                         name="name"
@@ -85,7 +85,6 @@ function EditWine (props) {
                     <label htmlFor="type">Type</label>
                     <select 
                         id="type"
-                        // ref={typeInput}
                         name="type"
                         value={selectedWine.type}
                         onChange={onChangeHandler}>
@@ -99,8 +98,7 @@ function EditWine (props) {
                     <label htmlFor="price">Price</label>
                     <div className="input-wrapper">
                         <span className="currency">$</span>
-                        <input 
-                            // ref={priceInput}
+                        <input
                             type="text" 
                             id="price"
                             name="price"
