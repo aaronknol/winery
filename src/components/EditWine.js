@@ -16,10 +16,16 @@ function EditWine (props) {
     const [currentRating, setCurrentRating] = useState('');
 
     useEffect(() => {
-        Object.keys(props.wines).map( key => {
-            if (key === props.match.params.wineId) {
-                setSelectedWine(props.wines[key]);
-                setCurrentRating(props.wines[key].rating);
+        console.log('its: ', props.wines)
+        if (props.wines.length === 0) {
+
+        }
+
+        props.wines.map((wine, index) => {
+            console.log('index: ', index, ' wineId: ', props.match.params.wineId);
+            if (index === parseInt(props.match.params.wineId, 10)) {
+                setSelectedWine(wine);
+                setCurrentRating(wine.rating);
             }
             return null;
         });
