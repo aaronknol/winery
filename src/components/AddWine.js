@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import StarRating from './StarRating';
 import formatToCents from '../utilities';
+import TakePhoto from './TakePhoto';
 
 function AddWine (props) {
     const [wine, setWine] = useState({
@@ -41,6 +42,13 @@ function AddWine (props) {
         setWine({
             ...wine,
             rating: selected
+        });
+    }
+
+    const setWineImage = (imageSource) => {
+        setWine({
+            ...wine,
+            image: imageSource
         });
     }
 
@@ -95,6 +103,8 @@ function AddWine (props) {
                         value={wine.rating}>
                     </StarRating>
                 </div>
+
+                <TakePhoto setWineImage={setWineImage}></TakePhoto>
 
                 <button type="submit">Add wine</button>
             </fieldset>
