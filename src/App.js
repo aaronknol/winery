@@ -10,7 +10,7 @@ import './App.css';
 class App extends React.Component {
 
   state = {
-    wines: {}
+    wines: []
   };
  
   componentDidMount() {
@@ -41,7 +41,7 @@ class App extends React.Component {
       const wines = [ ...this.state.wines ];
       wine.key = generatedKey;
    
-      wines[ Object.keys(this.state.wines).length ] = wine
+      wines.push(wine);
     
       // update state
       this.setState({
