@@ -28,22 +28,22 @@ function WineList (props) {
             </thead>
             <tbody>
                 {
-                    Object.keys(props.wines).map(key => (
+                    props.wines.map((wine, index) => (
                         <Wine 
-                            key={props.wines[key].key} 
-                            index={key} 
-                            wine={props.wines[key]}
+                            key={wine.key} 
+                            index={wine.key} 
+                            wine={wine}
                             render={ () => (
                                 <tr>
-                                    <td>{props.wines[key].name}</td>
-                                    <td>{props.wines[key].type}</td>
-                                    <td>{formatPrice(props.wines[key].price)}</td>
-                                    <td>{props.wines[key].rating}</td>
+                                    <td>{wine.name}</td>
+                                    <td>{wine.type}</td>
+                                    <td>{formatPrice(wine.price)}</td>
+                                    <td>{wine.rating}</td>
                                     <td>
-                                        <Link to={`/edit/${key}`}>Edit</Link>
+                                        <Link to={`/edit/${index}`}>Edit</Link>
                                     </td>
                                     <td>
-                                        <button type="button" onClick={ () => props.deleteWine(props.wines[key].key) }>
+                                        <button type="button" onClick={ () => props.deleteWine(wine.key) }>
                                             Delete
                                         </button>
                                     </td>
