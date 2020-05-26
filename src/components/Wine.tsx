@@ -1,20 +1,18 @@
 import * as React from 'react';
 
-interface IProps {
-    key: string,
-    index: string,
+export interface IProps {
     wine: {},
-    render ?: () => React.ReactNode,
-    children : any
+    index: string,
+    render?: () => React.ReactNode,
+    children?: any
 }
 
-function Wine(props: IProps): React.ReactNode {
-    if (props.render) {
-        return (
-        
-            props.render()
-        )
-    }
+export const Wine = (props: IProps)  => {
+    return (
+        <>
+            {props.render && props.render()}
+        </>
+    )
 }
 
 export default Wine;

@@ -13,7 +13,7 @@ type Wine = {
 
 interface IProps {
     sortWines: (name: string, type: string) => {},
-    deleteWine: () => {},
+    deleteWine: (wine: {}) => {},
     wines: Array<{key: string, name: string, rating: number, price: number, type: string}>
 }
 
