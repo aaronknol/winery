@@ -1,51 +1,69 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, ReactNode } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import formatToCents from '../utilities';
 import TakePhoto from './TakePhoto';
 
-function AddWine (props) {
+type Wine = {
+    name: string,
+    price: string,
+    type: string,
+    rating: string,
+    image?: string
+}
+
+interface IProps extends RouteComponentProps<{}> {
+    addWine: (wine: Wine) => {},
+    deleteWine: (wine: {}) => {},
+    wines: Array<{key: string, name: string, rating: number, price: number, type: string}>,
+    history: any
+}
+
+function AddWine(props: IProps) {
     const [wine, setWine] = useState({
         name: '',
         price: '',
         type: 'red',
-        rating: ''
+        rating: '',
+        image: ''
     });
     
-    const submitHandler = (e) => {
+    const submitHandler = (e: React.FormEvent) => {
         e.preventDefault();
-        wine.price = formatToCents(wine.price);
+        wine.price = formatToCents(wine.price).toString();
         props.addWine(wine);
         props.history.push('/');
     }
 
-    const onChangeHandler = (e) => {
-        if (e.target.name === 'name') {
+    const onChangeHandler = (event: React.FormEvent) => {
+        let target = event.target as HTMLInputElement;
+
+        if (event.target && target.name === 'name') {
             setWine(({
                 ...wine,
-                name: e.target.value
+                name: target.value
             }));
-        } else if (e.target.name === 'type') {
+        } else if (target.name === 'type') {
             setWine({
                 ...wine,
-                type: e.target.value
+                type:target.value
             });
-        } else if (e.target.name === 'price') {
+        } else if (target.name === 'price') {
             setWine({
                 ...wine,
-                price: e.target.value
+                price: target.value
             });
         }
     }
 
-    const ratingSelected = (selected) => {
+    const ratingSelected = (selected: string) => {
         setWine({
             ...wine,
             rating: selected
         });
     }
 
-    const setWineImage = (imageSource) => {
+    const setWineImage = (imageSource: string) => {
         setWine({
             ...wine,
             image: imageSource

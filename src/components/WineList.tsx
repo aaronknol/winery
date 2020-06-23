@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Fragment } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Wine from './Wine';
 import { formatPrice } from '../utilities';
 
@@ -21,7 +21,7 @@ const WineList = (props: IProps) => {
 
     return (
         <Fragment>
-            {/* <Link to='/add'>Add</Link> */}
+            <Link to='/add'>Add</Link>
 
             <table>
                 <thead>
@@ -55,7 +55,7 @@ const WineList = (props: IProps) => {
                                             <td>{formatPrice(wine.price)}</td>
                                             <td>{wine.rating}</td>
                                             <td>
-                                                {/* <Link to={`/edit/${index}`}>Edit</Link> */}
+                                                <Link to={`/edit/${index}`}>Edit</Link>
                                             </td>
                                             <td>
                                                 <button type="button" onClick={ () => props.deleteWine(wine.key) }>
