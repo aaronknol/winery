@@ -1,17 +1,31 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { FormEvent } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import formatToCents from '../utilities';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-function EditWine (props) {
+type Wine = {
+    name: string,
+    price: string,
+    type: string,
+    rating: string,
+    image?: string
+}
+
+interface IProps extends RouteComponentProps<{wineId: string}> {
+    wines: Array<{key: string, name: string, rating: string, price: string, type: string}>
+    updateWine: (key: string, wine: Wine) => {},
+    history: any
+}
+
+function EditWine (props: IProps) {
     const [selectedWine, setSelectedWine] = useState({
+        key: '',
         name: '',
         price: '',
         type: '',
         rating: '',
-        key: ''
     });
     const [currentRating, setCurrentRating] = useState('');
 
@@ -31,14 +45,14 @@ function EditWine (props) {
         });
     }, [props.wines, props.match.params.wineId]);
     
-    const submitHandler = (e) => {
+    const submitHandler = (e: FormEvent) => {
         e.preventDefault();
         
         const newWine = {
             key: selectedWine.key,
             name: selectedWine.name,
             type: selectedWine.type,
-            price: formatToCents(parseFloat(selectedWine.price)),
+            price: formatToCents(selectedWine.price).toString(),
             rating: currentRating
         };
 
@@ -46,28 +60,29 @@ function EditWine (props) {
         props.history.push('/');
     }
 
-    const ratingSelected = (selected) => {
+    const ratingSelected = (selected: string) => {
         setCurrentRating(selected);
     }
 
-    const onChangeHandler = (e) => {
-        console.log('gotta change something! ', e.target.name, ' ', e.target.value);
+    const onChangeHandler = (event: FormEvent) => {
+        let target = event.target as HTMLInputElement;
+        console.log('gotta change something! ', target.name, ' ', target.value);
         
-        if (e.target.name === 'name') {
+        if (target.name === 'name') {
             console.log('the selected wine: ', selectedWine);
             setSelectedWine({
                 ...selectedWine,
-                name: e.target.value
+                name: target.value
             });
-        } else if (e.target.name === 'type') {
+        } else if (target.name === 'type') {
             setSelectedWine({
                 ...selectedWine,
-                type: e.target.value
+                type: target.value
             });
-        } else if (e.target.name === 'price') {
+        } else if (target.name === 'price') {
             setSelectedWine({
                 ...selectedWine,
-                price: e.target.value
+                price: target.value
             });
         }
     }

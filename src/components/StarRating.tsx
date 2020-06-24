@@ -1,14 +1,13 @@
-import React, { Fragment, ReactNode, FunctionComponent } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 
 interface IProps {
     numberOfStars: string,
     value: string,
-    onClick: (selected: string) => void
+    onClick: (selected: string) => void,
+    onChange?: (event: React.FormEvent<HTMLInputElement>) => void
 }
 
 const StarRating: FunctionComponent<IProps> = (props: IProps) => {
-
-// function StarRating (props: IProps): JSX.Element<string, any, string>[] {
     // create an array that is length of numberOfStars, with values 0 to numberOfStars
     const numberOfStarsArray = Array.from(Array(parseInt(props.numberOfStars, 10)).keys());
 

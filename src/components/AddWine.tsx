@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import formatToCents from '../utilities';
