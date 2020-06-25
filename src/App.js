@@ -88,7 +88,7 @@ class App extends React.Component {
     });
 
     database.update('/wines/' + key, {
-      data: {name: null, price: null, rating: null, type: null, key: null}
+      data: {name: null, price: null, rating: null, type: null, key: null, image: null}
     }).then( () => {
       console.log('deleted it!');
     });
