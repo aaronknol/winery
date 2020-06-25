@@ -15,18 +15,26 @@ function TakePhoto (props) {
     useEffect( () => {
 
         /* Setting up the constraint */
-        var facingMode = "user"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
+        var facingMode = "environment"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
         var constraints = {
             audio: false,
             video: {
                 facingMode: facingMode
             }
         };
+        var currentVideo;
 
         /* Stream it to video element */
         navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
-            theVideo.current.srcObject = stream;
+            currentVideo = theVideo.current;
+            currentVideo.srcObject = stream;
         });
+
+        return function cleanup() {
+            var stream = currentVideo.srcObject;
+            stream.getTracks() // get all tracks from the MediaStream
+                .forEach( track => track.stop() )
+        }
     }, [theVideo]);
 
     return (
