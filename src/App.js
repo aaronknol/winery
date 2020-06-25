@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   addWine = (wine) => {
-    var immediatelyAvailableReference = database.push('wines', {
+    database.push('wines', {
       data: wine
     }).then(newLocation => {
       var generatedKey = newLocation.key;
@@ -53,7 +53,7 @@ class App extends React.Component {
       //handle error
     });
     //available immediately, you don't have to wait for the Promise to resolve
-    var generatedKey = immediatelyAvailableReference.key;
+    // var generatedKey = immediatelyAvailableReference.key;
   };
 
   updateWine = (key, wine) => {
