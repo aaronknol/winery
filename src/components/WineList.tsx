@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import Wine from './Wine';
 import { formatPrice } from '../utilities';
+import { MoreIcon, DeleteIcon } from "../icons";
 
 type Wine = {
     key : string,
@@ -21,23 +22,25 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
 
     return (
         <Fragment>
-            <Link to='/add'>Add</Link>
+            <Link to='/add' className="btn btn--primary">Add</Link>
 
             <table>
                 <thead>
                     <tr>
                         <th>
-                            <button type="button" onClick={ (e) => {props.sortWines('name', 'lowest')} }>
+                            <button className="btn btn--unstyled" type="button" onClick={ (e) => {props.sortWines('name', 'lowest')} }>
                                 Name
                             </button>
                         </th>
                         <th>Type</th>
                         <th>Price</th>
                         <th>
-                            <button type="button" onClick={ (e) => {props.sortWines('rating', 'highest')} }>
+                            <button className="btn btn--unstyled" type="button" onClick={ (e) => {props.sortWines('rating', 'highest')} }>
                                 Rating
                             </button>
                         </th>
+                        <th>Delete</th>
+                        <th>More</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,17 +53,19 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                                     wine={wine}
                                     render={ () => (
                                         <tr>
-                                            <td>{wine.name}</td>
-                                            <td>{wine.type}</td>
-                                            <td>{formatPrice(wine.price)}</td>
-                                            <td>{wine.rating}</td>
                                             <td>
-                                                <Link to={`/edit/${index}`}>Edit</Link>
+                                                <Link to={`/edit/${index}`}>{wine.name}</Link>
                                             </td>
+                                            <td>{wine.type}</td>
+                                            <td className="text-align--right">{formatPrice(wine.price)}</td>
+                                            <td className="text-align--right">{wine.rating}</td>
                                             <td>
                                                 <button type="button" onClick={ () => props.deleteWine(wine.key) }>
-                                                    Delete
+                                                    <DeleteIcon />
                                                 </button>
+                                            </td>
+                                            <td>
+                                                <MoreIcon />
                                             </td>
                                         </tr>
                                     )}>
