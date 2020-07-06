@@ -18,7 +18,7 @@ interface IProps extends RouteComponentProps<{}> {
     history: any
 }
 
-function AddWine(props: IProps) {
+const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
     const [wine, setWine] = useState({
         name: '',
         price: '',

@@ -17,7 +17,7 @@ interface IProps {
     wines: Array<{key: string, name: string, rating: number, price: number, type: string}>
 }
 
-const WineList = (props: IProps) => {
+const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
 
     return (
         <Fragment>

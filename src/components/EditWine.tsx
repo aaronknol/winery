@@ -18,7 +18,7 @@ interface IProps extends RouteComponentProps<{wineId: string}> {
     history: any
 }
 
-function EditWine (props: IProps) {
+const EditWine:React.FunctionComponent<IProps> = (props: IProps) => {
     const [selectedWine, setSelectedWine] = useState({
         key: '',
         name: '',
