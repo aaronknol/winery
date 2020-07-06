@@ -18,7 +18,7 @@ const StarRating: FunctionComponent<IProps> = (props: IProps) => {
     }
 
     return (
-       <>
+        <>
         {
             Object.keys(numberOfStarsArray).map((key) => (
                 <Fragment key={key}>

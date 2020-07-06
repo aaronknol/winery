@@ -1,7 +1,6 @@
 import React, { FormEvent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
-import formatToCents from '../utilities';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
@@ -52,7 +51,7 @@ function EditWine (props: IProps) {
             key: selectedWine.key,
             name: selectedWine.name,
             type: selectedWine.type,
-            price: formatToCents(selectedWine.price).toString(),
+            price: selectedWine.price.toString(),
             rating: currentRating
         };
 

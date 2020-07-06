@@ -7,7 +7,7 @@ export interface IProps {
     children?: any
 }
 
-export const Wine = (props: IProps)  => {
+const Wine: React.FunctionComponent<IProps> = (props: IProps)  => {
     return (
         <>
             {props.render && props.render()}
