@@ -4,7 +4,7 @@ export interface IProps {
     setWineImage: (img: string) => void
 }
 
-function TakePhoto (props: IProps) {
+const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
     const theVideo = React.useRef<HTMLVideoElement>(null);
     const theCanvas = React.useRef<HTMLCanvasElement>(null);
 
