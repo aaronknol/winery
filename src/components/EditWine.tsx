@@ -3,6 +3,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { formatPrice } from '../utilities';
 
 type Wine = {
     name: string,
@@ -18,7 +19,7 @@ interface IProps extends RouteComponentProps<{wineId: string}> {
     history: any
 }
 
-const EditWine:React.FunctionComponent<IProps> = (props: IProps) => {
+const EditWine:React.FunctionComponent<IProps> = (props) => {
     const [selectedWine, setSelectedWine] = useState({
         key: '',
         name: '',
@@ -79,6 +80,9 @@ const EditWine:React.FunctionComponent<IProps> = (props: IProps) => {
                 type: target.value
             });
         } else if (target.name === 'price') {
+            const newPrice = formatPrice(target.value);
+
+
             setSelectedWine({
                 ...selectedWine,
                 price: target.value

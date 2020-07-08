@@ -1,6 +1,10 @@
 export function formatPrice(cents) {
-    console.log('in formatPrice with ', cents)
-    return (cents / 100);
+    console.log('in formatPrice with ', cents);
+    if (cents.indexOf('.') === -1) {
+        return (cents / 100);
+    } else {
+        return cents;
+    }
 }
 
 // export function formatToCents(amount) {
