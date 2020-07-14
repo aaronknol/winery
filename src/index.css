@@ -75,3 +75,19 @@ tr {
 a {
   color: inherit;
 }
+
+.take-photo,
+.take-photo__video {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.take-photo__button {
+  position: fixed;
+  bottom: 10vh;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}

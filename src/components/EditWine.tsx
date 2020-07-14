@@ -80,9 +80,6 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                 type: target.value
             });
         } else if (target.name === 'price') {
-            const newPrice = formatPrice(target.value);
-
-
             setSelectedWine({
                 ...selectedWine,
                 price: target.value
@@ -126,7 +123,7 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                             type="text" 
                             id="price"
                             name="price"
-                            value={selectedWine.price}
+                            value={selectedWine.price = formatPrice(selectedWine.price)}
                             onChange={onChangeHandler}/>
                     </div>
                 </div>

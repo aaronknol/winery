@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 
 export interface IProps {
-    setWineImage: (img: string) => void
+    setWineImage: (img: string) => void,
+    className: string
 }
 
 const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
@@ -18,7 +19,6 @@ const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
             const img = theCanvas.current.toDataURL("image/png");
             props.setWineImage(img);
         }
-
     };
 
     useEffect( () => {
@@ -52,8 +52,8 @@ const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
 
     return (
         <Fragment>
-            <video ref={theVideo} playsInline autoPlay muted></video>
-            <button id="capture" type="button" onClick={takePhotoHandler}>Take photo</button>
+            <video ref={theVideo} playsInline autoPlay muted className="take-photo__video"></video>
+            <button id="capture" type="button" onClick={takePhotoHandler} className="take-photo__button">Take photo</button>
             <canvas id="canvas" ref={theCanvas} width="400" height="300"></canvas>
         </Fragment>
     )

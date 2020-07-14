@@ -26,6 +26,8 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         rating: '',
         image: ''
     });
+
+    const [takePhoto, setTakePhoto] = useState(false);
     
     const submitHandler = (e: React.FormEvent) => {
         e.preventDefault();
@@ -67,65 +69,83 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
             ...wine,
             image: imageSource
         });
+        setTakePhoto(false);
+    }
+
+    const handleTakePhoto = () => {
+        if (takePhoto) {
+            setTakePhoto(false);
+        } else {
+            setTakePhoto(true);
+        }
     }
 
     return (
-        <form onSubmit={submitHandler}>
-            <fieldset>
-                <h1>Add a new wine</h1>
+        <>
+            <form onSubmit={submitHandler}>
+                <fieldset>
+                    <h1>Add a new wine</h1>
 
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input 
-                        // ref={this.nameInput}
-                        type="text" 
-                        id="name"
-                        name="name"
-                        value={wine.name}
-                        onChange={onChangeHandler} />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="type">Type</label>
-                    <select 
-                        id="type"
-                        name="type"
-                        value={wine.type}
-                        onChange={onChangeHandler}>
-                        <option value="red">Red</option>
-                        <option value="white">White</option>
-                        <option value="rosé">Rosé</option>
-                    </select>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="price">Price</label>
-                    <div className="input-wrapper">
-                        <span className="currency">$</span>
+                    <div className="form-group">
+                        <label htmlFor="name">Name</label>
                         <input 
-                            name="price"
+                            // ref={this.nameInput}
                             type="text" 
-                            id="price"
-                            value={wine.price}
+                            id="name"
+                            name="name"
+                            value={wine.name}
                             onChange={onChangeHandler} />
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <h2>Rating</h2>
-                    
-                    <StarRating
-                        numberOfStars="5"
-                        onClick={ratingSelected}
-                        value={wine.rating}>
-                    </StarRating>
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="type">Type</label>
+                        <select 
+                            id="type"
+                            name="type"
+                            value={wine.type}
+                            onChange={onChangeHandler}>
+                            <option value="red">Red</option>
+                            <option value="white">White</option>
+                            <option value="rosé">Rosé</option>
+                        </select>
+                    </div>
 
-                <TakePhoto setWineImage={setWineImage}></TakePhoto>
+                    <div className="form-group">
+                        <label htmlFor="price">Price</label>
+                        <div className="input-wrapper">
+                            <span className="currency">$</span>
+                            <input 
+                                name="price"
+                                type="text" 
+                                id="price"
+                                value={wine.price}
+                                onChange={onChangeHandler} />
+                        </div>
+                    </div>
 
-                <button type="submit">Add wine</button>
-            </fieldset>
-        </form>
+                    <div className="form-group">
+                        <h2>Rating</h2>
+                        
+                        <StarRating
+                            numberOfStars="5"
+                            onClick={ratingSelected}
+                            value={wine.rating}>
+                        </StarRating>
+                    </div>
+
+                    <button type="button" onClick={handleTakePhoto}>Take photo</button>
+                    <button type="submit">Add wine</button>
+                </fieldset>
+            </form>
+
+            {
+                takePhoto && <TakePhoto className="take-photo" setWineImage={setWineImage}></TakePhoto>
+            }
+
+            {
+                wine.image && <img src={wine.image} alt={wine.name} />
+            }
+        </>
     );
 }
 
