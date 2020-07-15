@@ -78,6 +78,7 @@ a {
 
 .take-photo,
 .take-photo__video {
+  background-color: #000;
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -91,3 +92,5 @@ a {
   left: 50%;
   transform: translate3d(-50%, 0, 0);
 }
+
+.photo { max-width: 100%; }

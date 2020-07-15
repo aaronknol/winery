@@ -143,7 +143,7 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
             }
 
             {
-                wine.image && <img src={wine.image} alt={wine.name} />
+                wine.image && <img src={wine.image} alt={wine.name} className="photo" />
             }
         </>
     );
