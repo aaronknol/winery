@@ -38,6 +38,8 @@ const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
             if (theVideo.current !== null) {
                 currentVideo = theVideo.current;
                 currentVideo.srcObject = stream;
+                let {width, height} = stream.getTracks()[0].getSettings();
+                alert('width is: ' + width + ' height is: ' + height);
             }
         });
 
