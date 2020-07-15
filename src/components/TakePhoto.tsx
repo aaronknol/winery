@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 export interface IProps {
     setWineImage: (img: string) => void,
@@ -8,6 +8,8 @@ export interface IProps {
 const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
     const theVideo = React.useRef<HTMLVideoElement>(null);
     const theCanvas = React.useRef<HTMLCanvasElement>(null);
+    const [videoWidth, setVideoWidth] = useState(640);
+    const [videoHeight, setVideoHeight] = useState(480);
 
     const takePhotoHandler = () => {
         if ( theCanvas.current !== null  && theVideo.current !== null ) {
@@ -38,8 +40,12 @@ const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
             if (theVideo.current !== null) {
                 currentVideo = theVideo.current;
                 currentVideo.srcObject = stream;
-                let {width, height} = stream.getTracks()[0].getSettings();
-                alert('width is: ' + width + ' height is: ' + height);
+                // let {width, height} = stream.getTracks()[0].getSettings();
+                let width:number = stream.getTracks()[0].getSettings().width!;
+                let height:number = stream.getTracks()[0].getSettings().height!;
+                
+                setVideoWidth(width);
+                setVideoHeight(height);
             }
         });
 
@@ -56,7 +62,7 @@ const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
         <Fragment>
             <video ref={theVideo} playsInline autoPlay muted className="take-photo__video"></video>
             <button id="capture" type="button" onClick={takePhotoHandler} className="take-photo__button">Take photo</button>
-            <canvas id="canvas" ref={theCanvas} width="400" height="300"></canvas>
+            <canvas id="canvas" ref={theCanvas} width={videoWidth} height={videoHeight}></canvas>
         </Fragment>
     )
 }
