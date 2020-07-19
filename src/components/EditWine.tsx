@@ -1,6 +1,7 @@
 import React, { FormEvent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
+import TakePhoto from './TakePhoto';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { formatPrice } from '../utilities';
@@ -14,7 +15,7 @@ type Wine = {
 }
 
 interface IProps extends RouteComponentProps<{wineId: string}> {
-    wines: Array<{key: string, name: string, rating: string, price: string, type: string}>
+    wines: Array<{key: string, name: string, rating: string, price: string, type: string, image: string}>
     updateWine: (key: string, wine: Wine) => {},
     history: any
 }
@@ -26,8 +27,11 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
         price: '',
         type: '',
         rating: '',
+        image: ''
     });
     const [currentRating, setCurrentRating] = useState('');
+
+    const [takePhoto, setTakePhoto] = useState(false);
 
     useEffect(() => {
         console.log('its: ', props.wines)
@@ -44,6 +48,14 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
             return null;
         });
     }, [props.wines, props.match.params.wineId]);
+
+    const setWineImage = (imageSource: string) => {
+        setSelectedWine({
+            ...selectedWine,
+            image: imageSource
+        });
+        setTakePhoto(false);
+    }
     
     const submitHandler = (e: FormEvent) => {
         e.preventDefault();
@@ -53,7 +65,8 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
             name: selectedWine.name,
             type: selectedWine.type,
             price: selectedWine.price.toString(),
-            rating: currentRating
+            rating: currentRating,
+            image: selectedWine.image
         };
 
         props.updateWine(newWine.key, newWine);
@@ -87,7 +100,17 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
         }
     }
 
+    const handleTakePhoto = () => {
+        console.log('in take photo ', takePhoto);
+        if (takePhoto) {
+            setTakePhoto(false);
+        } else {
+            setTakePhoto(true);
+        }
+    }
+
     return (
+        <>
         <form onSubmit={submitHandler}>
             <fieldset>
                 <h1>Edit wine</h1>
@@ -138,10 +161,20 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                         onChange={onChangeHandler}>
                     </StarRating>
                 </div>
-
+                
+                <button type="button" onClick={handleTakePhoto}>Take photo</button>
                 <button type="submit">Save changes</button>
             </fieldset>
         </form>
+
+        {
+            takePhoto && <TakePhoto className="take-photo" setWineImage={setWineImage}></TakePhoto>
+        }
+
+        {
+            selectedWine.image && <img src={selectedWine.image} alt={selectedWine.name} className="photo" />
+        }
+        </>
     );
 }
 
