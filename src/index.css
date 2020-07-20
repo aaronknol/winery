@@ -155,3 +155,16 @@ a {
 }
 
 .wine__actions a:first-child { margin-left: 0; }
+
+.wine__rating {
+  margin: 0.5rem 0 0 0;
+}
+
+.wine__rating-value {
+  position:absolute;
+  left:-10000px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}

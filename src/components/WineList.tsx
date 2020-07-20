@@ -26,12 +26,9 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                                 <h2 className="wine__title">{wine.name}</h2>
                                 <p className="wine__type-price">
                                     <span className="wine__type">{wine.type}</span>
-                                    <span className="wine__price">{wine.price}</span>
+                                    <span className="wine__price">${wine.price}</span>
                                 </p>
-                                <div className="wine__rating">
-                                    <p>{wine.rating}</p>
-                                    <Stars numberOfStars={wine.rating} />
-                                </div>
+                                <Stars numberOfStars={wine.rating} cssClass="wine__rating" />
                                 <div className="wine__actions">
                                     <Link to={`/edit/${index}`} className="btn btn--primary">Edit</Link>
                                     <button type="button" className="btn btn--secondary" onClick={ () => props.deleteWine(wine.key) }>
