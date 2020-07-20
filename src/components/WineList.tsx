@@ -1,23 +1,17 @@
 import * as React from 'react';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-
-type Wine = {
-    key : string,
-    index: string,
-    wine: Wine,
-    render: () => {}
-}
+import { Stars } from './Star';
 
 interface IProps {
     sortWines: (name: string, type: string) => {},
     deleteWine: (wine: {}) => {},
-    wines: Array<{key: string, name: string, rating: number, price: number, type: string, image: string}>
+    wines: Array<{key: string, name: string, rating: number, price: string, type: string, image: string}>
 }
 
 const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
     const defaultImage = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTUwLjI3LDMuODkyYzAsMCwzLjkxMy0wLjEwMiw0LjIxMiwxLjE1MmwwLjQxNywzLjgyMmwtMC4zNTcsMC41Mzd2MTYuMDY1YzAsMCwwLjEyLDMuNDA0LDMuNDA1LDYuMTUxICBjMCwwLDQuMDAxLDMuNjQzLDQuMDAxLDkuOTE0djQ2Ljk0YzAsMCwwLjExOSw3LjI4NS0zLjg4Miw3LjgyNGMwLDAtMi45NTksMC4yMzgtNy43OTYsMC4yMzhjLTQuODM3LDAtNy43OTQtMC4yMzgtNy43OTQtMC4yMzggIGMtNC4wMDEtMC41MzktMy44ODItNy44MjQtMy44ODItNy44MjR2LTQ2Ljk0YzAtNi4yNzEsNC4wMDEtOS45MTQsNC4wMDEtOS45MTRjMy4yODQtMi43NDcsMy40MDQtNi4xNTEsMy40MDQtNi4xNTFWOS40MDQgIGwtMC4zNTktMC41MzdsMC40MTktMy44MjJDNDYuMzU3LDMuNzkxLDUwLjI3LDMuODkyLDUwLjI3LDMuODkyIj48L3BhdGg+PC9zdmc+';
-
+    
     return (
         <Fragment>
             <Link to='/add' className="btn btn--primary">Add</Link>
@@ -34,6 +28,10 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                                     <span className="wine__type">{wine.type}</span>
                                     <span className="wine__price">{wine.price}</span>
                                 </p>
+                                <div className="wine__rating">
+                                    <p>{wine.rating}</p>
+                                    <Stars numberOfStars={wine.rating} />
+                                </div>
                                 <div className="wine__actions">
                                     <Link to={`/edit/${index}`} className="btn btn--primary">Edit</Link>
                                     <button type="button" className="btn btn--secondary" onClick={ () => props.deleteWine(wine.key) }>

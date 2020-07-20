@@ -50,6 +50,7 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     }, [props.wines, props.match.params.wineId]);
 
     const setWineImage = (imageSource: string) => {
+
         setSelectedWine({
             ...selectedWine,
             image: imageSource
@@ -101,7 +102,6 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     }
 
     const handleTakePhoto = () => {
-        console.log('in take photo ', takePhoto);
         if (takePhoto) {
             setTakePhoto(false);
         } else {

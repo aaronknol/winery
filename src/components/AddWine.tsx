@@ -14,7 +14,7 @@ type Wine = {
 interface IProps extends RouteComponentProps<{}> {
     addWine: (wine: Wine) => {},
     deleteWine: (wine: {}) => {},
-    wines: Array<{key: string, name: string, rating: number, price: number, type: string}>,
+    wines: Array<{key: string, name: string, rating: number, price: string, type: string}>,
     history: any
 }
 
