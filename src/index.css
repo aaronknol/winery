@@ -6,6 +6,8 @@ body {
   padding: 20px;
 }
 
+h2 { font-size: 1rem; }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -74,6 +76,12 @@ tr {
 .btn--secondary {
   border: 1px solid #dc004e;
   background-color: #dc004e;
+}
+
+.btn--text {
+  background-color: transparent;
+  border: none;
+  color: unset;
 }
 
 .text-align--right {
@@ -167,4 +175,9 @@ a {
   width:1px;
   height:1px;
   overflow:hidden;
+}
+
+.sort-panel { 
+  display: flex; 
+  align-items: baseline;
 }

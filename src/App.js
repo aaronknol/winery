@@ -4,6 +4,7 @@ import database from './database';
 import AddWine from './components/AddWine';
 import EditWine from './components/EditWine';
 import WineList from './components/WineList';
+import { formatToCents } from './utilities';
 import './App.css';
 
 
@@ -64,6 +65,10 @@ class App extends React.Component {
     const objIndex = wines.findIndex((element => element.key === key));
     wines[objIndex] = wine;
 
+    wine.price = formatToCents(wine.price);
+
+    console.log('it is now: ',  wine.price);
+
     // Set new wine object to state
     this.setState({
       wines: wines
@@ -95,7 +100,6 @@ class App extends React.Component {
   }
 
   sortWines = (sortBy, method) => {
-    console.log('sortyBy: ', sortBy)
     // // Take a copy of state
     const wines = [ ...this.state.wines ];
 
@@ -112,11 +116,12 @@ class App extends React.Component {
         return 0;
 
       } else {
-        if (a[sortBy] < b[sortBy]) {
+
+        if (parseInt(a[sortBy], 10) < parseInt(b[sortBy], 10)) {
           return -1;
         }
                 
-        if (a[sortBy] > b[sortBy]) {
+        if (parseInt(a[sortBy], 10) > parseInt(b[sortBy], 10)) {
           return 1;
         }
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
+import { formatToCents } from '../utilities';
 
 type Wine = {
     name: string,
@@ -31,7 +32,8 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
     
     const submitHandler = (e: React.FormEvent) => {
         e.preventDefault();
-        wine.price = wine.price.toString();
+        wine.price = formatToCents(wine.price);
+        console.log('ive just it to ', wine.price);
         props.addWine(wine);
         props.history.push('/');
     }

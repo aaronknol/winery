@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Stars } from './Star';
+import SortPanel from './SortPanel';
+import { formatPrice } from '../utilities';
 
 interface IProps {
     sortWines: (name: string, type: string) => {},
@@ -10,11 +12,33 @@ interface IProps {
 }
 
 const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
+    const [sortVisible, setSortVisible] = React.useState(false);
+
     const defaultImage = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTUwLjI3LDMuODkyYzAsMCwzLjkxMy0wLjEwMiw0LjIxMiwxLjE1MmwwLjQxNywzLjgyMmwtMC4zNTcsMC41Mzd2MTYuMDY1YzAsMCwwLjEyLDMuNDA0LDMuNDA1LDYuMTUxICBjMCwwLDQuMDAxLDMuNjQzLDQuMDAxLDkuOTE0djQ2Ljk0YzAsMCwwLjExOSw3LjI4NS0zLjg4Miw3LjgyNGMwLDAtMi45NTksMC4yMzgtNy43OTYsMC4yMzhjLTQuODM3LDAtNy43OTQtMC4yMzgtNy43OTQtMC4yMzggIGMtNC4wMDEtMC41MzktMy44ODItNy44MjQtMy44ODItNy44MjR2LTQ2Ljk0YzAtNi4yNzEsNC4wMDEtOS45MTQsNC4wMDEtOS45MTRjMy4yODQtMi43NDcsMy40MDQtNi4xNTEsMy40MDQtNi4xNTFWOS40MDQgIGwtMC4zNTktMC41MzdsMC40MTktMy44MjJDNDYuMzU3LDMuNzkxLDUwLjI3LDMuODkyLDUwLjI3LDMuODkyIj48L3BhdGg+PC9zdmc+';
+    
+    const sortMethod = ( sortBy:string ) => {
+        if (sortBy === 'Price') {
+            props.sortWines('price', 'lowest')
+        }
+
+        if (sortBy === 'Rating') {
+            props.sortWines('rating', 'highest')
+        }
+    }
     
     return (
         <Fragment>
-            <Link to='/add' className="btn btn--primary">Add</Link>
+            <div className="actions">
+                <Link to='/add' className="btn btn--primary">Add</Link>
+
+                <button type="button" className="btn btn--primary" onClick={() => {setSortVisible(!sortVisible)}}>
+                    Sort
+                </button>
+                {
+                    sortVisible && <SortPanel sortMethod={sortMethod}></SortPanel>
+                }
+            </div>
+            
             {
                 props.wines.map((wine, index: number) => {
 
@@ -26,7 +50,7 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                                 <h2 className="wine__title">{wine.name}</h2>
                                 <p className="wine__type-price">
                                     <span className="wine__type">{wine.type}</span>
-                                    <span className="wine__price">${wine.price}</span>
+                                    <span className="wine__price">${formatPrice(wine.price)}</span>
                                 </p>
                                 <Stars numberOfStars={wine.rating} cssClass="wine__rating" />
                                 <div className="wine__actions">
