@@ -4,7 +4,7 @@ export interface IProps {
     wine: {},
     index: string,
     render?: () => React.ReactNode,
-    children?: any
+    children?: JSX.Element
 }
 
 const Wine: React.FunctionComponent<IProps> = (props: IProps)  => {

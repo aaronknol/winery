@@ -1,5 +1,5 @@
 export function formatPrice(cents) {
-    console.log('in formatPrice with ', cents, ' and type is ', typeof cents, ' and the index is ', cents.indexOf('.'));
+    
     if (typeof cents !== 'string') {
         console.log('in here, not a string: ', cents)
         return cents
