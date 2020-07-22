@@ -113,12 +113,13 @@ a {
 
 .wine {
   display: flex;
+  align-items: flex-start;
   padding: 0.8rem 0;
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .wine__image {
-  width: 150px;
+  width: 160px;
   margin-right: 1rem;
 }
 
@@ -139,7 +140,7 @@ a {
 
 .wine__type-price {
   display: flex;
-  align-items: center;
+  align-items: flex-center;
   font-size: 0.8rem;
   margin: 0;
   padding: 0.2rem 0;
