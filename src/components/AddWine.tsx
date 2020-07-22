@@ -3,28 +3,22 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { formatToCents } from '../utilities';
-
-type Wine = {
-    name: string,
-    price: string,
-    type: string,
-    rating: string,
-    image?: string
-}
+import { Wine } from '../interfaces';
 
 interface IProps extends RouteComponentProps<{}> {
     addWine: (wine: Wine) => {},
     deleteWine: (wine: {}) => {},
-    wines: Array<{key: string, name: string, rating: number, price: string, type: string}>,
+    wines: Array<Wine>,
     history: any
 }
 
 const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
     const [wine, setWine] = useState({
+        key: '',
         name: '',
         price: '',
         type: 'red',
-        rating: '',
+        rating: 0,
         image: ''
     });
 
@@ -52,6 +46,7 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
                 type:target.value
             });
         } else if (target.name === 'price') {
+            console.log('in here with: ', target.value);
             setWine({
                 ...wine,
                 price: target.value
@@ -59,7 +54,7 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         }
     }
 
-    const ratingSelected = (selected: string) => {
+    const ratingSelected = (selected: number) => {
         setWine({
             ...wine,
             rating: selected

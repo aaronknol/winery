@@ -92,6 +92,13 @@ a {
   color: inherit;
 }
 
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions *:first-child { margin-left: 0; }
+
 .take-photo,
 .take-photo__video {
   background-color: #000;

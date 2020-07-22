@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 import { Stars } from './Star';
 import SortPanel from './SortPanel';
 import { formatPrice } from '../utilities';
+import { Wine } from '../interfaces';
 
 interface IProps {
     sortWines: (name: string, type: string) => {},
     deleteWine: (wine: {}) => {},
-    wines: Array<{key: string, name: string, rating: number, price: string, type: string, image: string}>
+    wines: Array<Wine>
 }
 
 const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
@@ -34,11 +35,11 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                 <button type="button" className="btn btn--primary" onClick={() => {setSortVisible(!sortVisible)}}>
                     Sort
                 </button>
-                {
+                
+            </div>
+            {
                     sortVisible && <SortPanel sortMethod={sortMethod}></SortPanel>
                 }
-            </div>
-            
             {
                 props.wines.map((wine, index: number) => {
 

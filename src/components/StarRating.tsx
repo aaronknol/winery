@@ -2,8 +2,8 @@ import React, { Fragment, FunctionComponent } from 'react';
 
 interface IProps {
     numberOfStars: string,
-    value: string,
-    onClick: (selected: string) => void,
+    value: number,
+    onClick: (selected: number) => void,
     onChange?: (event: React.FormEvent<HTMLInputElement>) => void
 }
 
@@ -13,7 +13,7 @@ const StarRating: FunctionComponent<IProps> = (props: IProps) => {
 
     const clickHandler = (event: React.FormEvent) => {
         const target = event.target as HTMLInputElement;
-        const selectedValue = target.value;
+        const selectedValue = parseInt(target.value, 10);
         props.onClick(selectedValue);
     }
 
@@ -29,7 +29,7 @@ const StarRating: FunctionComponent<IProps> = (props: IProps) => {
                         id={`rating-${parseInt(key, 10) + 1}`} 
                         value={parseInt(key, 10) + 1} 
                         onChange={clickHandler}
-                        checked={parseInt(props.value, 10) === parseInt(key, 10) + 1}
+                        checked={props.value === parseInt(key, 10) + 1}
                     />
                 </Fragment>
             ))

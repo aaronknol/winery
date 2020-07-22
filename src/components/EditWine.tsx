@@ -1,35 +1,34 @@
-import React, { FormEvent } from 'react';
+import React, { useRef, useCallback, FormEvent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { formatPrice } from '../utilities';
+import { Wine } from '../interfaces';
 
-type Wine = {
-    name: string,
-    price: string,
-    type: string,
-    rating: string,
-    image?: string
-}
+
 
 interface IProps extends RouteComponentProps<{wineId: string}> {
-    wines: Array<{key: string, name: string, rating: string, price: string, type: string, image: string}>
+    wines: Array<Wine>,
     updateWine: (key: string, wine: Wine) => {},
     history: any
 }
 
 const EditWine:React.FunctionComponent<IProps> = (props) => {
+
+    const priceRef = useRef<HTMLInputElement>(null);
+    
+
     const [selectedWine, setSelectedWine] = useState({
         key: '',
         name: '',
         price: '',
         type: '',
-        rating: '',
+        rating: 0,
         image: ''
     });
-    const [currentRating, setCurrentRating] = useState('');
+    const [currentRating, setCurrentRating] = useState(0);
 
     const [takePhoto, setTakePhoto] = useState(false);
 
@@ -38,15 +37,19 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
         if (props.wines.length === 0) {
 
         }
+        
 
         props.wines.map((wine, index) => {
             console.log('index: ', index, ' wineId: ', props.match.params.wineId);
             if (index === parseInt(props.match.params.wineId, 10)) {
                 setSelectedWine(wine);
                 setCurrentRating(wine.rating);
+                // @ts-ignore
+                priceRef.current.value = wine.price;
             }
             return null;
         });
+
     }, [props.wines, props.match.params.wineId]);
 
     const setWineImage = (imageSource: string) => {
@@ -60,21 +63,34 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     
     const submitHandler = (e: FormEvent) => {
         e.preventDefault();
+        const price = priceRef.current;
+        
+        if (price !== null) {
+            console.log('submitting with ', price.value)
+            setSelectedWine({
+                ...selectedWine,
+                price: price.value
+            });
+        }
+// @ts-ignore
+        console.log('hey Ive set it to ', formatPrice(price.value))
         
         const newWine = {
             key: selectedWine.key,
             name: selectedWine.name,
             type: selectedWine.type,
-            price: selectedWine.price.toString(),
+            price: price ? price.value.toString() : '',
             rating: currentRating,
             image: selectedWine.image
         };
+
+        console.log('new wine ', newWine.price);
 
         props.updateWine(newWine.key, newWine);
         props.history.push('/');
     }
 
-    const ratingSelected = (selected: string) => {
+    const ratingSelected = (selected: number) => {
         setCurrentRating(selected);
     }
 
@@ -146,8 +162,9 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                             type="text" 
                             id="price"
                             name="price"
-                            value={selectedWine.price = formatPrice(selectedWine.price)}
-                            onChange={onChangeHandler}/>
+                            defaultValue={selectedWine.price = formatPrice(selectedWine.price)}
+                            ref={priceRef}
+                            />
                     </div>
                 </div>
 
