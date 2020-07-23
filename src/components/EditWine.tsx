@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, FormEvent } from 'react';
+import React, { useRef, FormEvent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
