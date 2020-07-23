@@ -45,7 +45,7 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                 setSelectedWine(wine);
                 setCurrentRating(wine.rating);
                 // @ts-ignore
-                priceRef.current.value = wine.price;
+                priceRef.current.value = formatPrice(wine.price);
             }
             return null;
         });
