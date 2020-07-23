@@ -102,7 +102,7 @@ class App extends React.Component {
   sortWines = (sortBy, method) => {
     // // Take a copy of state
     const wines = [ ...this.state.wines ];
-
+    
     wines.sort((a, b) => {
       if (method === 'highest') {
         if (a[sortBy] > b[sortBy]) {

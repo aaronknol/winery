@@ -132,22 +132,24 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                 <h1>Edit wine</h1>
 
                 <div className="form-group">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name" className="label">Name</label>
                     <input
                         type="text" 
                         id="name"
                         name="name"
                         value={selectedWine.name}
-                        onChange={onChangeHandler} />
+                        onChange={onChangeHandler} 
+                        className="input--text" />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="type">Type</label>
+                    <label htmlFor="type" className="label">Type</label>
                     <select 
                         id="type"
                         name="type"
                         value={selectedWine.type}
-                        onChange={onChangeHandler}>
+                        onChange={onChangeHandler}
+                        className="input--select">
                         <option value="red">Red</option>
                         <option value="white">white</option>
                         <option value="rose">rose</option>
@@ -155,7 +157,7 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price" className="label">Price</label>
                     <div className="input-wrapper">
                         <span className="currency">$</span>
                         <input
@@ -164,12 +166,13 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                             name="price"
                             defaultValue={selectedWine.price = formatPrice(selectedWine.price)}
                             ref={priceRef}
+                            className="input--text input--text-indent"
                             />
                     </div>
                 </div>
 
                 <div className="form-group">
-                    <h2>Rating</h2>
+                    <h2 className="label">Rating</h2>
                     
                     <StarRating
                         numberOfStars="5"
@@ -178,19 +181,23 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                         onChange={onChangeHandler}>
                     </StarRating>
                 </div>
+
+                {
+                    takePhoto && <TakePhoto className="take-photo" setWineImage={setWineImage}></TakePhoto>
+                }
+
+                {
+                    selectedWine.image && <img src={selectedWine.image} alt={selectedWine.name} className="photo" />
+                }
                 
-                <button type="button" onClick={handleTakePhoto}>Take photo</button>
-                <button type="submit">Save changes</button>
+                <div className="form__actions">
+                    <button type="button" className="btn btn--primary btn--full" onClick={handleTakePhoto}>Take photo</button>
+                    <button type="submit" className="btn btn--primary btn--full">Save changes</button>
+                </div>
             </fieldset>
         </form>
 
-        {
-            takePhoto && <TakePhoto className="take-photo" setWineImage={setWineImage}></TakePhoto>
-        }
-
-        {
-            selectedWine.image && <img src={selectedWine.image} alt={selectedWine.name} className="photo" />
-        }
+        
         </>
     );
 }

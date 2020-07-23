@@ -84,23 +84,25 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
                     <h1>Add a new wine</h1>
 
                     <div className="form-group">
-                        <label htmlFor="name">Name</label>
+                        <label htmlFor="name" className="label">Name</label>
                         <input 
                             // ref={this.nameInput}
                             type="text" 
                             id="name"
                             name="name"
                             value={wine.name}
-                            onChange={onChangeHandler} />
+                            onChange={onChangeHandler}
+                            className="input--text" />
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="type">Type</label>
+                        <label htmlFor="type" className="label">Type</label>
                         <select 
                             id="type"
                             name="type"
                             value={wine.type}
-                            onChange={onChangeHandler}>
+                            onChange={onChangeHandler}
+                            className="input--select">
                             <option value="red">Red</option>
                             <option value="white">White</option>
                             <option value="rosé">Rosé</option>
@@ -108,7 +110,7 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="price">Price</label>
+                        <label htmlFor="price" className="label">Price</label>
                         <div className="input-wrapper">
                             <span className="currency">$</span>
                             <input 
@@ -116,12 +118,13 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
                                 type="text" 
                                 id="price"
                                 value={wine.price}
-                                onChange={onChangeHandler} />
+                                onChange={onChangeHandler}
+                                className="input--text" />
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <h2>Rating</h2>
+                        <h2 className="label">Rating</h2>
                         
                         <StarRating
                             numberOfStars="5"
@@ -130,18 +133,22 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
                         </StarRating>
                     </div>
 
-                    <button type="button" onClick={handleTakePhoto}>Take photo</button>
-                    <button type="submit">Add wine</button>
+                    {
+                        takePhoto && <TakePhoto className="take-photo" setWineImage={setWineImage}></TakePhoto>
+                    }
+
+                    {
+                        wine.image && <img src={wine.image} alt={wine.name} className="photo" />
+                    }
+                    
+                    <div className="form__actions">
+                        <button type="button" onClick={handleTakePhoto} className="btn btn--primary btn--full">Take photo</button>
+                        <button type="submit" className="btn btn--primary btn--full">Add wine</button>
+                    </div>
                 </fieldset>
             </form>
 
-            {
-                takePhoto && <TakePhoto className="take-photo" setWineImage={setWineImage}></TakePhoto>
-            }
-
-            {
-                wine.image && <img src={wine.image} alt={wine.name} className="photo" />
-            }
+            
         </>
     );
 }
