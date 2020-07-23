@@ -11,8 +11,13 @@ import './App.css';
 class App extends React.Component {
 
   state = {
-    wines: []
+    wines: [],
+    isLoading: true
   };
+
+ defaultImage = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTUwLjI3LDMuODkyYzAsMCwzLjkxMy0wLjEwMiw0LjIxMiwxLjE1MmwwLjQxNywzLjgyMmwtMC4zNTcsMC41Mzd2MTYuMDY1YzAsMCwwLjEyLDMuNDA0LDMuNDA1LDYuMTUxICBjMCwwLDQuMDAxLDMuNjQzLDQuMDAxLDkuOTE0djQ2Ljk0YzAsMCwwLjExOSw3LjI4NS0zLjg4Miw3LjgyNGMwLDAtMi45NTksMC4yMzgtNy43OTYsMC4yMzhjLTQuODM3LDAtNy43OTQtMC4yMzgtNy43OTQtMC4yMzggIGMtNC4wMDEtMC41MzktMy44ODItNy44MjQtMy44ODItNy44MjR2LTQ2Ljk0YzAtNi4yNzEsNC4wMDEtOS45MTQsNC4wMDEtOS45MTRjMy4yODQtMi43NDcsMy40MDQtNi4xNTEsMy40MDQtNi4xNTFWOS40MDQgIGwtMC4zNTktMC41MzdsMC40MTktMy44MjJDNDYuMzU3LDMuNzkxLDUwLjI3LDMuODkyLDUwLjI3LDMuODkyIj48L3BhdGg+PC9zdmc+';
+
+  
  
   componentDidMount() {
     
@@ -27,7 +32,8 @@ class App extends React.Component {
       asArray: true
     }).then((data) => {
       this.setState({
-        wines: data
+        wines: data,
+        isLoading: false
       });
     });
 
@@ -102,7 +108,7 @@ class App extends React.Component {
   sortWines = (sortBy, method) => {
     // // Take a copy of state
     const wines = [ ...this.state.wines ];
-    
+
     wines.sort((a, b) => {
       if (method === 'highest') {
         if (a[sortBy] > b[sortBy]) {
@@ -140,11 +146,18 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <WineList 
-              wines={this.state.wines} 
-              deleteWine={this.deleteWine} 
-              sortWines={this.sortWines}>
-            </WineList>
+
+            {
+              this.state.isLoading ? <div className="loading"><img src={this.defaultImage} alt="Loading" className="loading__img" /></div> : (
+                <WineList 
+                wines={this.state.wines} 
+                deleteWine={this.deleteWine} 
+                sortWines={this.sortWines}>
+              </WineList>
+              )
+            }
+
+            
           </Route>
           <Route path="/edit/:wineId">
             <EditWine 
