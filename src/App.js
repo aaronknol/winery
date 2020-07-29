@@ -71,7 +71,8 @@ class App extends React.Component {
     const objIndex = wines.findIndex((element => element.key === key));
     wines[objIndex] = wine;
 
-    wine.price = Math.ceil(formatToCents(wine.price)).toString();
+    // wine.price = Math.ceil(formatToCents(wine.price)).toString();
+    wine.price = formatToCents(wine.price).toString();
 
     console.log('it is now: ',  wine.price);
 

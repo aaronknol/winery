@@ -4,7 +4,7 @@ import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { formatPrice } from '../utilities';
+import { formatPrice, formatToCents } from '../utilities';
 import { Wine } from '../interfaces';
 
 
@@ -17,7 +17,7 @@ interface IProps extends RouteComponentProps<{wineId: string}> {
 
 const EditWine:React.FunctionComponent<IProps> = (props) => {
 
-    const priceRef = useRef<HTMLInputElement>(null);
+    // const priceRef = useRef<HTMLInputElement>(null);
     
 
     const [selectedWine, setSelectedWine] = useState({
@@ -45,7 +45,7 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                 setSelectedWine(wine);
                 setCurrentRating(wine.rating);
                 // @ts-ignore
-                priceRef.current.value = formatPrice(wine.price);
+                // priceRef.current.value = formatPrice(wine.price);
             }
             return null;
         });
@@ -63,23 +63,21 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     
     const submitHandler = (e: FormEvent) => {
         e.preventDefault();
-        const price = priceRef.current;
+        // const price = priceRef.current;
         
-        if (price !== null) {
-            console.log('submitting with ', price.value)
+        if (selectedWine.price !== null) {
+            
             setSelectedWine({
                 ...selectedWine,
-                price: price.value
+                price: selectedWine.price
             });
         }
-// @ts-ignore
-        console.log('hey Ive set it to ', formatPrice(price.value))
         
         const newWine = {
             key: selectedWine.key,
             name: selectedWine.name,
             type: selectedWine.type,
-            price: price ? price.value.toString() : '',
+            price: selectedWine ? selectedWine.price.toString() : '',
             rating: currentRating,
             image: selectedWine.image
         };
@@ -110,9 +108,12 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                 type: target.value
             });
         } else if (target.name === 'price') {
+
+            
+
             setSelectedWine({
                 ...selectedWine,
-                price: target.value
+                price: formatToCents(target.value)
             });
         }
     }
@@ -164,8 +165,8 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
                             type="text" 
                             id="price"
                             name="price"
-                            defaultValue={selectedWine.price = formatPrice(selectedWine.price)}
-                            ref={priceRef}
+                            value={formatPrice(selectedWine.price)}
+                            onChange={onChangeHandler}
                             className="input--text input--text-indent"
                             />
                     </div>
