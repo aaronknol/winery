@@ -10,12 +10,8 @@ interface IProps {
 }
 
 export const Stars: React.FunctionComponent<IProps> = (props: IProps) => {
-    var starsArray = [];
-
-    for (var i=0;i<props.numberOfStars;i++) {
-        starsArray[i] = '';
-    }
-
+    var starsArray = Array.from(Array(props.numberOfStars));
+    
     return (
         <div className={props.cssClass}>
             <span className="wine__rating-value">{props.numberOfStars} out 5 stars</span>
