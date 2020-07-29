@@ -1,4 +1,4 @@
-import React, { useRef, FormEvent } from 'react';
+import React, { FormEvent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
@@ -16,9 +16,6 @@ interface IProps extends RouteComponentProps<{wineId: string}> {
 }
 
 const EditWine:React.FunctionComponent<IProps> = (props) => {
-
-    // const priceRef = useRef<HTMLInputElement>(null);
-    
 
     const [selectedWine, setSelectedWine] = useState({
         key: '',
@@ -44,8 +41,6 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
             if (index === parseInt(props.match.params.wineId, 10)) {
                 setSelectedWine(wine);
                 setCurrentRating(wine.rating);
-                // @ts-ignore
-                // priceRef.current.value = formatPrice(wine.price);
             }
             return null;
         });
