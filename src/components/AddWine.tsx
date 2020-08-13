@@ -85,8 +85,7 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
 
                     <div className="form-group">
                         <label htmlFor="name" className="label">Name</label>
-                        <input 
-                            // ref={this.nameInput}
+                        <input
                             type="text" 
                             id="name"
                             name="name"
