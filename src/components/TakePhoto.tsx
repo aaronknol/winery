@@ -64,7 +64,7 @@ const TakePhoto:React.FunctionComponent<IProps> = (props: IProps) => {
         <Fragment>
             <video ref={theVideo} playsInline autoPlay muted className="take-photo__video"></video>
             <button id="capture" type="button" onClick={takePhotoHandler} className="take-photo__button">Take photo</button>
-            <canvas id="canvas" ref={theCanvas} width={videoWidth} height={videoHeight}></canvas>
+            <canvas id="canvas" ref={theCanvas} width={videoHeight} height={videoWidth}></canvas>
         </Fragment>
     )
 }
