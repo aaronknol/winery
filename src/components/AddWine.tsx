@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { formatToCents } from '../utilities';
 import { Wine } from '../interfaces';
 
 interface IProps extends RouteComponentProps<{}> {
-    addWine: (wine: Wine) => {},
-    deleteWine: (wine: {}) => {},
-    wines: Array<Wine>,
-    history: any
+    addWine: (wine: Wine) => {}
 }
 
 const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
+    const history = useHistory();
     const [wine, setWine] = useState({
         key: '',
         name: '',
@@ -29,7 +27,8 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         wine.price = formatToCents(wine.price);
         console.log('ive just it to ', wine.price);
         props.addWine(wine);
-        props.history.push('/');
+        // props.history.push('/');
+        history.push('/');
     }
 
     const onChangeHandler = (event: React.FormEvent) => {
@@ -151,5 +150,5 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         </>
     );
 }
-
-export default withRouter(AddWine);
+export default AddWine;
+// export default withRouter(AddWine);
