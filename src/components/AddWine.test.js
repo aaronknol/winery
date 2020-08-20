@@ -1,5 +1,6 @@
 import React from 'react';
 import AddWine from './AddWine';
+import { useHistory } from 'react-router-dom';
 import {render, screen, fireEvent } from '@testing-library/react';
 import App from '../App';
 
@@ -34,13 +35,26 @@ test('A name can be entered', () => {
     expect(screen.getByLabelText('Name')).toHaveValue(nameOfWine);
 });
 
+const mockHistoryPush = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    push: mockHistoryPush,
+  }),
+}));
+
 test('A price can be entered', () => {
-    const { getByText } = render(<AddWine />);
+    const handleAddWine = jest.fn();
+    const { getByText } = render(<AddWine addWine={handleAddWine} submitHandler={handleAddWine} />);
     const valueOfWine = '14.99';
 
     fireEvent.change(screen.getByLabelText('Price'), {
         target: { value: valueOfWine},
     });
 
+    getByText('Add wine').click();
+
     expect(screen.getByLabelText('Price')).toHaveValue(valueOfWine);
+    expect(mockHistoryPush).toHaveBeenCalledWith('/');
 });
