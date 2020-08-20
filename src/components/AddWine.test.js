@@ -3,6 +3,26 @@ import AddWine from './AddWine';
 import {render, screen, fireEvent } from '@testing-library/react';
 import App from '../App';
 
+test('The correct content has been rendered', () => {
+    const { getByText, getByLabelText, getByRole } = render(<AddWine />);
+
+    getByText("Add a new wine");
+    getByLabelText("Name");
+    getByLabelText("Type");
+    getByLabelText("Price");
+
+    getByLabelText("1");
+    getByLabelText("2");
+    getByLabelText("3");
+    getByLabelText("4");
+    getByLabelText("5");
+
+    getByText("Rating");
+    getByText("Take photo");
+    getByText("Add wine");
+
+});
+
 test('A name can be entered', () => {
     const { getByText } = render(<AddWine />);
     const nameOfWine = 'Lovely Summer Red';
