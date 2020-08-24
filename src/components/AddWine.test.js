@@ -1,77 +1,78 @@
 import React from 'react';
 import AddWine from './AddWine';
-import { useHistory } from 'react-router-dom';
+import { WineTypes } from '../interfaces';
 import {render, screen, fireEvent } from '@testing-library/react';
 import App from '../App';
 
 test('The correct content has been rendered', () => {
-    const { getByText, getByLabelText, getByRole } = render(<AddWine />);
+    const { getByText, getByLabelText, getAllByRole } = render(<AddWine />);
+    
+    // add assertions
+    expect(getByText("Add a new wine").toHaveValue); // toHaveContent seems better if works
+    expect(getByLabelText("Name").toHaveValue);
+    expect(getByLabelText("Type").toHaveValue);
+    expect(getByLabelText("Price").toHaveValue);
 
-    getByText("Add a new wine");
-    getByLabelText("Name");
-    getByLabelText("Type");
-    getByLabelText("Price");
+    expect(getByLabelText("1").toHaveValue);
+    expect(getByLabelText("2").toHaveValue);
+    expect(getByLabelText("3").toHaveValue);
+    expect(getByLabelText("4").toHaveValue);
+    expect(getByLabelText("5").toHaveValue);
 
-    getByLabelText("1");
-    getByLabelText("2");
-    getByLabelText("3");
-    getByLabelText("4");
-    getByLabelText("5");
-
-    getByText("Rating");
-    getByText("Take photo");
-    getByText("Add wine");
-
+    expect(getByText("Rating").toHaveValue);
+    expect(getAllByRole('button', { name: 'Take photo' }.toHaveValue));
+    expect(getAllByRole('button', { name: 'Add wine' }.toHaveValue));
 });
 
 test('A name can be entered', () => {
-    const { getByText } = render(<AddWine />);
+    const { getByLabelText } = render(<AddWine />);
     const nameOfWine = 'Lovely Summer Red';
 
     fireEvent.change(screen.getByLabelText('Name'), {
         target: { value: nameOfWine},
     });
 
-    expect(screen.getByLabelText('Name')).toHaveValue(nameOfWine);
+    expect(getByLabelText('Name')).toHaveValue(nameOfWine);
 });
 
-const mockHistoryPush = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    push: mockHistoryPush,
-  }),
-}));
-
 test('A price can be entered', () => {
-    const { getByText } = render(<AddWine />);
+    const { getByLabelText } = render(<AddWine />);
     const valueOfWine = '14.99';
 
     fireEvent.change(screen.getByLabelText('Price'), {
         target: { value: valueOfWine},
     });
 
-    expect(screen.getByLabelText('Price')).toHaveValue(valueOfWine);
+    expect(getByLabelText('Price')).toHaveValue(valueOfWine);
 });
 
 test('All types of wine can be selected', () => {
-    const { getByText } = render(<AddWine />);
-    const typesOfWine = ['red', 'white', 'rosé'];
+    const { getByLabelText } = render(<AddWine />);
 
-    typesOfWine.forEach((type) => {
+    for (let type in WineTypes) {
         fireEvent.change(screen.getByLabelText('Type'), {
-            target: { value: type},
+            target: { value: WineTypes[type]},
         });
-        expect(screen.getByLabelText('Type')).toHaveValue(type);
-    })
+        expect(getByLabelText('Type')).toHaveValue(WineTypes[type]);
+    }
+});
+
+test('A rating can be selected', () => {
+    const { getByLabelText } = render(<AddWine />);
+    const chosenRating = 3;
+    
+    fireEvent.change(screen.getByLabelText("3"), {
+        target: { value: chosenRating},
+    });
+
+    expect(getByLabelText('3')).toBeChecked;
 });
 
 test('A wine can be added', () => {
     const nameOfWine = 'Lovely Summer Red';
     const valueOfWine = '14.99';
     const handleAddWine = jest.fn();
-    const { getByText } = render(<AddWine addWine={handleAddWine} submitHandler={handleAddWine} />);
+    const { getByText } = render(<AddWine addWine={handleAddWine} />);
 
     fireEvent.change(screen.getByLabelText('Name'), {
         target: { value: nameOfWine},
@@ -84,7 +85,6 @@ test('A wine can be added', () => {
 
     getByText('Add wine').click();
 
-    expect(mockHistoryPush).toHaveBeenCalledWith('/');
     expect(handleAddWine).toHaveBeenCalled();
     expect(handleAddWine).toHaveBeenCalledWith({
         key: '',

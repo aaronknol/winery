@@ -7,6 +7,12 @@ export interface Wine {
     image: string
 }
 
+export enum WineTypes {
+    RED = 'red',
+    WHITE = 'white',
+    ROSÉ = 'rosé'
+}
+
 // type Wine = {
 //     name: string,
 //     price: string,

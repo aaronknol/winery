@@ -12,7 +12,8 @@ import { Wine } from '../interfaces';
 interface IProps extends RouteComponentProps<{wineId: string}> {
     wines: Array<Wine>,
     updateWine: (key: string, wine: Wine) => {},
-    history: any
+    history: any,
+    getWineFromID: (id:string) => Wine
 }
 
 const EditWine:React.FunctionComponent<IProps> = (props) => {
@@ -30,20 +31,10 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     const [takePhoto, setTakePhoto] = useState(false);
 
     useEffect(() => {
-        console.log('its: ', props.wines)
-        if (props.wines.length === 0) {
+        const theWine = props.getWineFromID(props.match.params.wineId);
 
-        }
-        
-
-        props.wines.map((wine, index) => {
-            console.log('index: ', index, ' wineId: ', props.match.params.wineId);
-            if (index === parseInt(props.match.params.wineId, 10)) {
-                setSelectedWine(wine);
-                setCurrentRating(wine.rating);
-            }
-            return null;
-        });
+        setSelectedWine(theWine);
+        setCurrentRating(theWine.rating);
 
     }, [props.wines, props.match.params.wineId]);
 

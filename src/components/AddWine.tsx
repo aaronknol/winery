@@ -3,7 +3,7 @@ import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { formatToCents } from '../utilities';
-import { Wine } from '../interfaces';
+import { Wine, WineTypes } from '../interfaces';
 
 interface IProps extends RouteComponentProps<{}> {
     addWine: (wine: Wine) => {}
@@ -27,8 +27,6 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         wine.price = formatToCents(wine.price);
         console.log('ive just it to ', wine.price);
         props.addWine(wine);
-        // props.history.push('/');
-        history.push('/');
     }
 
     const onChangeHandler = (event: React.FormEvent) => {
@@ -76,6 +74,16 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         }
     }
 
+    const renderWineTypes = () => {
+        return (
+            Object.values(WineTypes).map((value) => {
+                return (
+                    <option key={value} value={value}>{value}</option>
+                )
+            })
+        )
+    }
+
     return (
         <>
             <form onSubmit={submitHandler}>
@@ -101,9 +109,9 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
                             value={wine.type}
                             onChange={onChangeHandler}
                             className="input--select">
-                            <option value="red">Red</option>
-                            <option value="white">White</option>
-                            <option value="rosé">Rosé</option>
+                            {
+                                renderWineTypes()
+                            }
                         </select>
                     </div>
 

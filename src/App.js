@@ -10,6 +10,7 @@ import './App.css';
 
 class App extends React.Component {
 
+
   state = {
     wines: [],
     isLoading: true
@@ -142,6 +143,10 @@ class App extends React.Component {
     });
   }
 
+  getWineFromID = (id) => {
+    return this.state.wines[id];
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -151,9 +156,9 @@ class App extends React.Component {
             {
               this.state.isLoading ? <div className="loading"><img src={this.defaultImage} alt="Loading" className="loading__img" /></div> : (
                 <WineList 
-                wines={this.state.wines} 
-                deleteWine={this.deleteWine} 
-                sortWines={this.sortWines}>
+                  wines={this.state.wines} 
+                  deleteWine={this.deleteWine} 
+                  sortWines={this.sortWines}>
               </WineList>
               )
             }
@@ -162,7 +167,8 @@ class App extends React.Component {
           </Route>
           <Route path="/edit/:wineId">
             <EditWine 
-              wines={this.state.wines} 
+              wines={this.state.wines}
+              getWineFromID={this.getWineFromID}
               updateWine={this.updateWine}>
             </EditWine>
           </Route>
