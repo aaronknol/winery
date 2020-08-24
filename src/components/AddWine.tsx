@@ -6,10 +6,7 @@ import { formatToCents } from '../utilities';
 import { Wine } from '../interfaces';
 
 interface IProps extends RouteComponentProps<{}> {
-    addWine: (wine: Wine) => {},
-    deleteWine: (wine: {}) => {},
-    wines: Array<Wine>,
-    history: any
+    addWine: (wine: Wine) => void
 }
 
 const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {

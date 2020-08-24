@@ -11,7 +11,7 @@ import { Wine } from '../interfaces';
 
 interface IProps extends RouteComponentProps<{wineId: string}> {
     wines: Array<Wine>,
-    updateWine: (key: string, wine: Wine) => {},
+    updateWine: (key: string, wine: Wine) => void,
     history: any
 }
 

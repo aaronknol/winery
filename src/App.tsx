@@ -6,13 +6,12 @@ import AddWine from './components/AddWine';
 import EditWine from './components/EditWine';
 import WineList from './components/WineList';
 import { formatToCents } from './utilities';
+import { Wine } from './interfaces';
 import './App.css';
 
 
 function App () {
-  const [wines, setWines] = useState({
-    'wines': []
-  });
+  const [wines, setWines] = useState<Wine[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const defaultImage = 'data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9JzMwMHB4JyB3aWR0aD0nMzAwcHgnICBmaWxsPSIjMDAwMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTAwIDEwMCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+PHBhdGggZD0iTTUwLjI3LDMuODkyYzAsMCwzLjkxMy0wLjEwMiw0LjIxMiwxLjE1MmwwLjQxNywzLjgyMmwtMC4zNTcsMC41Mzd2MTYuMDY1YzAsMCwwLjEyLDMuNDA0LDMuNDA1LDYuMTUxICBjMCwwLDQuMDAxLDMuNjQzLDQuMDAxLDkuOTE0djQ2Ljk0YzAsMCwwLjExOSw3LjI4NS0zLjg4Miw3LjgyNGMwLDAtMi45NTksMC4yMzgtNy43OTYsMC4yMzhjLTQuODM3LDAtNy43OTQtMC4yMzgtNy43OTQtMC4yMzggIGMtNC4wMDEtMC41MzktMy44ODItNy44MjQtMy44ODItNy44MjR2LTQ2Ljk0YzAtNi4yNzEsNC4wMDEtOS45MTQsNC4wMDEtOS45MTRjMy4yODQtMi43NDcsMy40MDQtNi4xNTEsMy40MDQtNi4xNTFWOS40MDQgIGwtMC4zNTktMC41MzdsMC40MTktMy44MjJDNDYuMzU3LDMuNzkxLDUwLjI3LDMuODkyLDUwLjI3LDMuODkyIj48L3BhdGg+PC9zdmc+';
@@ -24,7 +23,7 @@ function App () {
     database.fetch('/wines', {
       context: this,
       asArray: true
-    }).then((data) => {
+    }).then((data:any) => {
       console.log('data: ', data);
       setWines([
         ...data
@@ -47,10 +46,10 @@ function App () {
     // }
   }, []);
 
-  const addWine = (wine) => {
+  const addWine = (wine:Wine) => {
     database.push('wines', {
       data: wine
-    }).then(newLocation => {
+    }).then((newLocation:{key: string}) => {
       var generatedKey = newLocation.key;
       wine.key = generatedKey;
    
@@ -60,14 +59,14 @@ function App () {
       ])
       console.log("WINES: ", wines);
 
-    }).catch(err => {
+    }).catch((err:Error) => {
       //handle error
     });
     //available immediately, you don't have to wait for the Promise to resolve
     // var generatedKey = immediatelyAvailableReference.key;
   };
 
-  const updateWine = (key, wine) => {
+  const updateWine = (key:string, wine:Wine) => {
     console.log('key: ', key)
     // Take a copy of state
     const copyOfWines = [ ...wines ];
@@ -92,7 +91,7 @@ function App () {
     });
   }
 
-  const deleteWine = (key) => {
+  const deleteWine = (key:string) => {
     
     //Take a copy of state
     let copyOfWines = [ ...wines ];
@@ -113,11 +112,11 @@ function App () {
     });
   }
 
-  const sortWines = (sortBy, method) => {
+  const sortWines = (sortBy:'price' | 'rating', method:'highest' | 'lowest') => {
     // // Take a copy of state
-    const copyOfWines = [ ...wines ];
+    const copyOfWines:Wine[] = [ ...wines ];
 
-    copyOfWines.sort((a, b) => {
+    copyOfWines.sort((a,b) => {
       if (method === 'highest') {
         if (a[sortBy] > b[sortBy]) {
           return -1;
@@ -129,9 +128,10 @@ function App () {
         // names must be equal
         return 0;
 
-      } else {
-
-        if (parseInt(a[sortBy], 10) < parseInt(b[sortBy], 10)) {
+      } else if (method === 'lowest') {
+        let testA = parseInt(a[sortBy], 10);
+        let testB = parseInt(b[sortBy], 10)
+        if (testA < testB) {
           return -1;
         }
                 
@@ -141,6 +141,8 @@ function App () {
 
         // names must be equal
         return 0;
+      } else {
+        return -1
       }
     });
 

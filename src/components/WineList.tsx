@@ -8,7 +8,7 @@ import { Wine } from '../interfaces';
 
 interface IProps {
     sortWines: (name: string, type: string) => {},
-    deleteWine: (wine: {}) => {},
+    deleteWine: (key:string) =>  void,
     wines: Array<Wine>
 }
 
