@@ -52,22 +52,35 @@ function App (props) {
     database.push('wines', {
       data: wine
     }).then(newLocation => {
-      var generatedKey = newLocation.key;
-      wine.key = generatedKey;
-   
-      setWines([
-        ...wines,
-        wine
-      ])
-      console.log("WINES ARE NOW: ", wines);
-      history.push('/');
-      console.log('done push');
+      updateStateWines(wine, newLocation);
     }).catch(err => {
       //handle error
     });
     //available immediately, you don't have to wait for the Promise to resolve
     // var generatedKey = immediatelyAvailableReference.key;
   };
+
+  const updateStateWines = (wine, newLocation) => {
+    const generatedKey = newLocation.key;
+    wine.key = generatedKey;
+ 
+    setWines([
+      ...wines,
+      wine
+    ])
+    console.log("WINES ARE NOW: ", wines);
+    history.push('/');
+    console.log('done push');
+  }
+
+  const updateDatabase = (key, wine) => {
+    database.update('/wines/' + key, {
+      data: { ...wine }
+    }).then( () => {
+      console.log('updated it!');
+      history.push('/');
+    });
+  }
 
   const updateWine = (key, wine) => {
     console.log('key: ', key)
@@ -87,12 +100,8 @@ function App (props) {
       ...copyOfWines
     ]);
 
-    database.update('/wines/' + key, {
-      data: { ...wine }
-    }).then( () => {
-      console.log('updated it!');
-      history.push('/');
-    });
+    updateDatabase(key, wine);
+
   }
 
   const deleteWine = (key) => {
@@ -109,11 +118,7 @@ function App (props) {
       ...copyOfWines
     ]);
 
-    database.update('/wines/' + key, {
-      data: {name: null, price: null, rating: null, type: null, key: null, image: null}
-    }).then( () => {
-      console.log('deleted it!');
-    });
+    updateDatabase(key, {name: null, price: null, rating: null, type: null, key: null, image: null});
   }
 
   const sortWines = (sortBy, method) => {
