@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useHistory, withRouter, useLocation } from 'react-router-dom';
 // import database from './database';
 import database from './database';
 import AddWine from './components/AddWine';
@@ -9,7 +9,8 @@ import { formatToCents } from './utilities';
 import './App.css';
 
 
-function App () {
+function App (props) {
+  let history = useHistory();
   const [wines, setWines] = useState({
     'wines': []
   });
@@ -58,8 +59,9 @@ function App () {
         ...wines,
         wine
       ])
-      console.log("WINES: ", wines);
-
+      console.log("WINES ARE NOW: ", wines);
+      history.push('/');
+      console.log('done push');
     }).catch(err => {
       //handle error
     });
@@ -89,6 +91,7 @@ function App () {
       data: { ...wine }
     }).then( () => {
       console.log('updated it!');
+      history.push('/');
     });
   }
 
@@ -150,10 +153,12 @@ function App () {
   }
 
   const getWineFromID = (id) => {
-    return wines[id];
+    const lastIndex = props.location.pathname.lastIndexOf('/');
+    const wineID = props.location.pathname.substr(lastIndex + 1, props.location.pathname.length);
+    return wines[wineID];
   }
   return (
-    <BrowserRouter>
+    
     <Switch>
       <Route exact path="/">
 
@@ -176,7 +181,6 @@ function App () {
       </Route>
       <Route path="/add" ><AddWine addWine={addWine}></AddWine></Route> 
     </Switch>
-  </BrowserRouter>
 
 
     // <Fragment>
@@ -187,4 +191,5 @@ function App () {
   );
 }
 
-export default App;
+// export default App;
+export default withRouter(App);

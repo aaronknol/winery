@@ -13,7 +13,7 @@ interface IProps extends RouteComponentProps<{wineId: string}> {
     wines: Array<Wine>,
     updateWine: (key: string, wine: Wine) => {},
     history: any,
-    getWineFromID: (id:string) => Wine
+    getWineFromID: () => Wine
 }
 
 const EditWine:React.FunctionComponent<IProps> = (props) => {
@@ -31,12 +31,12 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     const [takePhoto, setTakePhoto] = useState(false);
 
     useEffect(() => {
-        const theWine = props.getWineFromID(props.match.params.wineId);
+        const theWine = props.getWineFromID();
 
         setSelectedWine(theWine);
         setCurrentRating(theWine.rating);
 
-    }, [props.wines, props.match.params.wineId]);
+    }, []);
 
     const setWineImage = (imageSource: string) => {
 
@@ -49,7 +49,6 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     
     const submitHandler = (e: FormEvent) => {
         e.preventDefault();
-        // const price = priceRef.current;
         
         if (selectedWine.price !== null) {
             
@@ -71,7 +70,6 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
         console.log('new wine ', newWine.price);
 
         props.updateWine(newWine.key, newWine);
-        props.history.push('/');
     }
 
     const ratingSelected = (selected: number) => {
@@ -188,5 +186,5 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
         </>
     );
 }
-
-export default withRouter(EditWine);
+export default EditWine;
+// export default withRouter(EditWine);

@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { withRouter, RouteComponentProps, useHistory } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { formatToCents } from '../utilities';
 import { Wine, WineTypes } from '../interfaces';
 
-interface IProps extends RouteComponentProps<{}> {
+interface IProps {
     addWine: (wine: Wine) => {}
 }
 
 const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
-    const history = useHistory();
     const [wine, setWine] = useState({
         key: '',
         name: '',
