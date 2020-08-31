@@ -44,7 +44,7 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                 props.wines.map((wine, index: number) => {
 
                     return (
-                        <div className="wine" key={wine.key}>
+                        <div className="wine" data-testid={'wine-' + index} key={wine.key}>
                             
                             <img src={wine.image ? wine.image : defaultImage } alt={wine.image} className="wine__image" />
                             <div className="wine__details">

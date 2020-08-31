@@ -1,4 +1,5 @@
-import React, { Fragment, FunctionComponent } from 'react';
+import React, { Fragment, FunctionComponent, useState, useEffect } from 'react';
+import { Star } from './Star';
 
 interface IProps {
     numberOfStars: string,
@@ -10,6 +11,7 @@ interface IProps {
 const StarRating: FunctionComponent<IProps> = (props: IProps) => {
     // create an array that is length of numberOfStars, with values 0 to numberOfStars
     const numberOfStarsArray = Array.from(Array(parseInt(props.numberOfStars, 10)).keys());
+    const [activeIndex, setActiveIndex] = useState(0);
 
     const clickHandler = (event: React.FormEvent) => {
         const target = event.target as HTMLInputElement;
@@ -17,20 +19,32 @@ const StarRating: FunctionComponent<IProps> = (props: IProps) => {
         props.onClick(selectedValue);
     }
 
+    useEffect(() => {
+        setActiveIndex(props.value - 1);
+    }, [props.value]);
+
     return (
         <>
         {
-            Object.keys(numberOfStarsArray).map((key) => (
+            Object.keys(numberOfStarsArray).map((key, index) => (
                 <Fragment key={key}>
-                    <label htmlFor={`rating-${parseInt(key, 10) + 1}`}>{ parseInt(key, 10) + 1 }</label>
                     <input 
                         type="radio" 
                         name="rating" 
                         id={`rating-${parseInt(key, 10) + 1}`} 
                         value={parseInt(key, 10) + 1} 
-                        onChange={clickHandler}
+                        onChange={(e) => {
+                            clickHandler(e);
+                            setActiveIndex(index);
+                        }}
                         checked={props.value === parseInt(key, 10) + 1}
+                        className="visuallyhidden"
                     />
+                    <label 
+                        htmlFor={`rating-${parseInt(key, 10) + 1}`}>
+                            <span className="visuallyhidden">{ parseInt(key, 10) + 1 }</span>
+                            <Star  />
+                    </label>
                 </Fragment>
             ))
         }

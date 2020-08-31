@@ -204,6 +204,14 @@ fieldset {
   text-transform: uppercase;
 }
 
+input:checked ~ label svg { fill: transparent}
+input:checked + label svg { fill: #ffd055; }
+
+input ~ label svg { fill: #ffd055; }
+
+input:focus + label svg,
+input:hover + label svg { fill:#ffd055; }
+
 .input--select,
 .input--text {
   border: 1px solid #ccc;
@@ -259,4 +267,15 @@ body {
   flex-direction: column;
   height: 100%;
   width: 100%;
+}
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }

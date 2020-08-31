@@ -14,7 +14,7 @@ const AddWine:React.FunctionComponent<IProps> = (props: IProps) => {
         name: '',
         price: '',
         type: 'red',
-        rating: 0,
+        rating: 1,
         image: ''
     });
 
