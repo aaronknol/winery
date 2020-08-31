@@ -91,7 +91,7 @@ test('A wine can be added', () => {
         name: nameOfWine,
         price: valueOfWine,
         type: 'red',
-        rating: 0,
+        rating: 1,
         image: ''
     });
 })
