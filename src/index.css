@@ -203,14 +203,17 @@ fieldset {
   padding-bottom: 0.2rem;
   text-transform: uppercase;
 }
+.form-group label svg {fill:#ffd055; }
+.form-group input:checked ~ label svg { fill: transparent;}
+.form-group input:checked + label svg { fill:#ffd055; }
 
-input:checked ~ label svg { fill: transparent}
-input:checked + label svg { fill: #ffd055; }
+.form-group:hover input + label svg { fill:#ffd055; }
 
-input ~ label svg { fill: #ffd055; }
+.form-group input:focus ~ label svg { fill: transparent; }
+.form-group input:hover ~ label svg { fill: transparent; }
 
-input:focus + label svg,
-input:hover + label svg { fill:#ffd055; }
+.form-group input:focus + label svg,
+.form-group input:hover + label svg { fill:#ffd055; }
 
 .input--select,
 .input--text {
