@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch, useHistory, withRouter, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, withRouter } from 'react-router-dom';
 // import database from './database';
 import database from './database';
 import AddWine from './components/AddWine';

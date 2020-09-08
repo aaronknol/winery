@@ -1,5 +1,5 @@
 import React, { FormEvent } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import StarRating from './StarRating';
 import TakePhoto from './TakePhoto';
 import { useState } from 'react';

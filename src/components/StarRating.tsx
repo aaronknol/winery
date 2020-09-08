@@ -1,4 +1,4 @@
-import React, { Fragment, FunctionComponent, useState, useEffect } from 'react';
+import React, { Fragment, FunctionComponent } from 'react';
 import { Star } from './Star';
 
 interface IProps {
@@ -11,17 +11,12 @@ interface IProps {
 const StarRating: FunctionComponent<IProps> = (props: IProps) => {
     // create an array that is length of numberOfStars, with values 0 to numberOfStars
     const numberOfStarsArray = Array.from(Array(parseInt(props.numberOfStars, 10)).keys());
-    const [activeIndex, setActiveIndex] = useState(0);
 
     const clickHandler = (event: React.FormEvent) => {
         const target = event.target as HTMLInputElement;
         const selectedValue = parseInt(target.value, 10);
         props.onClick(selectedValue);
     }
-
-    useEffect(() => {
-        setActiveIndex(props.value - 1);
-    }, [props.value]);
 
     return (
         <>
@@ -35,7 +30,6 @@ const StarRating: FunctionComponent<IProps> = (props: IProps) => {
                         value={parseInt(key, 10) + 1} 
                         onChange={(e) => {
                             clickHandler(e);
-                            setActiveIndex(index);
                         }}
                         checked={props.value === parseInt(key, 10) + 1}
                         className="visuallyhidden"
