@@ -34,12 +34,13 @@ test('The correct content has been rendered', () => {
     // Wine 1
     const wine0 = getByTestId('wine-0');
     const wine0Stars = wine0.querySelectorAll('svg');
-    const wine0StarsLength = wine0Stars.length;
+    expect(wine0Stars).toHaveLength(3);
+    
 
     expect(getByText("Wine 1").toHaveValue);
     expect(getByText("$14.22").toHaveValue);
     expect(wine0).toHaveValue;
-    expect(wine0StarsLength).toEqual(3);
+    // expect(wine0StarsLength).toEqual(3);
 
     //Wine 2
     const wine1 = getByTestId('wine-1');
