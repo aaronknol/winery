@@ -183,6 +183,19 @@ a {
   display: flex; 
   align-items: baseline;
   flex-shrink: 0;
+  height: auto;
+  max-height: 0;
+  animation: openUp 400ms ease-out forwards;
+}
+
+@keyframes openUp {
+  0% {
+    max-height: 0;
+  }
+
+  100% {
+    max-height: 100px;
+  }
 }
 
 fieldset { 

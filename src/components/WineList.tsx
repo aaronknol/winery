@@ -38,8 +38,8 @@ const WineList:React.FunctionComponent<IProps> = (props: IProps) => {
                 
             </div>
             {
-                    sortVisible && <SortPanel sortMethod={sortMethod}></SortPanel>
-                }
+                sortVisible && <SortPanel sortMethod={sortMethod}></SortPanel>
+            }
             {
                 props.wines.map((wine, index: number) => {
 
