@@ -177,12 +177,14 @@ function App (props) {
           )
         } 
       </Route>
-      <Route path="/edit/:wineId">
-      <EditWine 
-          wines={wines}
-          getWineFromID={getWineFromID}
+      <Route path="/edit/:wineId" render={routeProps => (
+        <EditWine 
+          wineID= {getWineFromID(routeProps.match.params.wineId)}
           updateWine={updateWine}>
-        </EditWine>
+    </EditWine>
+          
+      )}>
+      
       </Route>
       <Route path="/add" ><AddWine addWine={addWine}></AddWine></Route> 
     </Switch>
