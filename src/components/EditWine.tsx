@@ -13,7 +13,8 @@ interface IProps extends RouteComponentProps<{wineId: string}> {
     wines: Array<Wine>,
     updateWine: (key: string, wine: Wine) => {},
     history: any,
-    getWineFromID: () => Wine
+    getWineFromID: () => Wine,
+    wineID: Wine
 }
 
 const EditWine:React.FunctionComponent<IProps> = (props) => {
@@ -31,12 +32,13 @@ const EditWine:React.FunctionComponent<IProps> = (props) => {
     const [takePhoto, setTakePhoto] = useState(false);
 
     useEffect(() => {
-        const theWine = props.getWineFromID();
+        const theWine = props.wineID;
+        if (props.wineID) {
+            setSelectedWine(theWine);
+            setCurrentRating(theWine.rating);
+        }
 
-        setSelectedWine(theWine);
-        setCurrentRating(theWine.rating);
-
-    }, []);
+    }, [props.wineID]);
 
     const setWineImage = (imageSource: string) => {
 
